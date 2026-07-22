@@ -1,0 +1,42 @@
+[
+  {
+    "id": "a5655b2a-cb97-4038-8a24-04efe2dd7b85",
+    "type": "memory",
+    "title": "Saved general",
+    "description": "name: deependra",
+    "entity_type": "memory",
+    "entity_id": null,
+    "metadata": "{}",
+    "created_at": "2026-07-21T22:28:24.783Z"
+  },
+  {
+    "id": "45a51b45-2109-41cf-907b-928888a6d53a",
+    "type": "memory",
+    "title": "Saved notes",
+    "description": "notes: my name is deependra",
+    "entity_type": "memory",
+    "entity_id": null,
+    "metadata": "{}",
+    "created_at": "2026-07-21T22:28:24.778Z"
+  },
+  {
+    "id": "9027a2a1-5d3c-434c-982a-f73c51abf2f6",
+    "type": "memory",
+    "title": "Saved identity",
+    "description": "identity: deependra",
+    "entity_type": "memory",
+    "entity_id": null,
+    "metadata": "{}",
+    "created_at": "2026-07-21T22:28:24.775Z"
+  },
+  {
+    "id": "8664f813-45b3-4d86-a68d-7420c74ae3ec",
+    "type": "chat",
+    "title": "New conversation",
+    "description": "Started a new chat",
+    "entity_type": "conversation",
+    "entity_id": "5eedc4df-2337-4f74-8f3a-9bca830ce49e",
+    "metadata": "{}",
+    "created_at": "2026-07-21T22:27:51.093Z"
+  }
+]

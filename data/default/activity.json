@@ -1,0 +1,22 @@
+[
+  {
+    "id": "b8671360-fdef-4b3a-90be-28494e2b9987",
+    "type": "system",
+    "title": "Daily news fetched",
+    "description": "42 articles across 5 categories",
+    "entity_type": "news",
+    "entity_id": "2026-07-21",
+    "metadata": "{}",
+    "created_at": "2026-07-21T22:27:56.393Z"
+  },
+  {
+    "id": "312e331a-b863-4dd8-8894-8ba0dd4497d7",
+    "type": "chat",
+    "title": "Chat: reasoning [normal] via Google Gemini/Gemini 2.5 Flash",
+    "description": "what projects i have created name them",
+    "entity_type": "conversation",
+    "entity_id": "5eedc4df-2337-4f74-8f3a-9bca830ce49e",
+    "metadata": "{}",
+    "created_at": "2026-07-21T22:27:54.320Z"
+  }
+]

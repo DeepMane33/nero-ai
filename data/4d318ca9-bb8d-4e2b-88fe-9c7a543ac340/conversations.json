@@ -1,0 +1,35 @@
+[
+  {
+    "id": "34f3af2a-66ad-4260-be65-19535927f068",
+    "title": "New Chat",
+    "brain_type": "reasoning",
+    "is_pinned": 0,
+    "folder": "default",
+    "summary": null,
+    "message_count": 0,
+    "created_at": "2026-07-21T18:59:35.967Z",
+    "updated_at": "2026-07-21T18:59:35.967Z"
+  },
+  {
+    "id": "3c0b9865-3804-4a93-bced-d3f2d36e5ca9",
+    "title": "New Chat",
+    "brain_type": "reasoning",
+    "is_pinned": 0,
+    "folder": "default",
+    "summary": null,
+    "message_count": 0,
+    "created_at": "2026-07-21T21:47:04.198Z",
+    "updated_at": "2026-07-21T21:47:04.198Z"
+  },
+  {
+    "id": "5eedc4df-2337-4f74-8f3a-9bca830ce49e",
+    "title": "New Chat",
+    "brain_type": "reasoning",
+    "is_pinned": 0,
+    "folder": "default",
+    "summary": null,
+    "message_count": 0,
+    "created_at": "2026-07-21T22:27:51.090Z",
+    "updated_at": "2026-07-21T22:27:51.090Z"
+  }
+]

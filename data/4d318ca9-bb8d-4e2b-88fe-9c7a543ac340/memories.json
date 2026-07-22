@@ -1,0 +1,57 @@
+[
+  {
+    "id": "85da9b6a-74ac-4869-8db2-0dc43f0f2591",
+    "category": "work",
+    "key": "power",
+    "value": "power is mine",
+    "confidence": 0.9,
+    "source": null,
+    "tags": "[]",
+    "created_at": "2026-07-21T21:46:01.360Z",
+    "updated_at": "2026-07-21T21:46:25.371Z"
+  },
+  {
+    "id": "dcb846ec-3566-47ca-a518-6731075b0cbf",
+    "category": "identity",
+    "key": "favourite character",
+    "value": "luffy",
+    "confidence": 0.8,
+    "source": null,
+    "tags": "[]",
+    "created_at": "2026-07-21T21:48:19.259Z",
+    "updated_at": "2026-07-21T21:48:19.259Z"
+  },
+  {
+    "id": "2213d2b9-e286-432a-ab47-1d415ac00256",
+    "category": "identity",
+    "key": "identity",
+    "value": "deependra",
+    "confidence": 0.8,
+    "source": null,
+    "tags": "[]",
+    "created_at": "2026-07-21T22:28:24.758Z",
+    "updated_at": "2026-07-21T22:28:24.758Z"
+  },
+  {
+    "id": "a2ea9a41-5859-43e4-8e57-434c695be500",
+    "category": "notes",
+    "key": "notes",
+    "value": "my name is deependra",
+    "confidence": 0.8,
+    "source": null,
+    "tags": "[]",
+    "created_at": "2026-07-21T22:28:24.764Z",
+    "updated_at": "2026-07-21T22:28:24.764Z"
+  },
+  {
+    "id": "5eedbaf2-463a-413a-87c3-c750ec08e2f1",
+    "category": "general",
+    "key": "name",
+    "value": "deependra",
+    "confidence": 0.8,
+    "source": null,
+    "tags": "[]",
+    "created_at": "2026-07-21T22:28:24.772Z",
+    "updated_at": "2026-07-21T22:28:24.772Z"
+  }
+]

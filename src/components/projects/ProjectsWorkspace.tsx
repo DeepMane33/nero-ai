@@ -24,6 +24,7 @@ import {
   type ProjectNote,
   type ProjectTask,
 } from '@/lib/client-projects';
+import { addActivity } from '@/lib/client-activity';
 
 type ActiveTab = 'files' | 'notes' | 'tasks';
 
@@ -469,11 +470,7 @@ export default function ProjectsWorkspace() {
   const handleCreateFile = async () => {
     if (!activeProject || !newFileName.trim()) { showToast('File name is required', 'error'); return; }
     try {
-      await fetch('/api/projects/' + activeProject.id + '/files', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: newFileName, content: '' }),
-      });
+      createProjectFileStore(activeProject.id, newFileName, '');
       showToast('File created');
       setShowNewFileModal(false);
       setNewFileName('');
@@ -486,11 +483,7 @@ export default function ProjectsWorkspace() {
   const handleSaveFile = async () => {
     if (!activeProject || !activeFile) return;
     try {
-      await fetch('/api/projects/' + activeProject.id + '/files', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: activeFile.id, content: fileContent }),
-      });
+      updateProjectFileStore(activeFile.id, fileContent);
       showToast('File saved');
       setFileModified(false);
     } catch {
@@ -507,11 +500,7 @@ export default function ProjectsWorkspace() {
       onConfirm: async () => {
         setConfirm(null);
         try {
-          await fetch('/api/projects/' + activeProject.id + '/files', {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: fileId }),
-          });
+          deleteProjectFileStore(fileId);
           showToast('File deleted');
           if (activeFile?.id === fileId) { setActiveFile(null); setFileContent(''); setFileModified(false); }
           fetchFiles(activeProject.id);
@@ -546,20 +535,13 @@ export default function ProjectsWorkspace() {
   const handleCreateNote = async () => {
     if (!activeProject) return;
     try {
-      const res = await fetch('/api/projects/' + activeProject.id + '/notes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: 'Untitled Note', content: '' }),
-      });
-      const data = await res.json();
+      const note = createProjectNoteStore(activeProject.id, 'Untitled Note', '');
       showToast('Note created');
       fetchNotes(activeProject.id);
-      if (data.note) {
-        setActiveNote(data.note);
-        setNoteTitle(data.note.title || '');
-        setNoteContent(data.note.content || '');
-        setNoteModified(false);
-      }
+      setActiveNote(note);
+      setNoteTitle(note.title || '');
+      setNoteContent(note.content || '');
+      setNoteModified(false);
     } catch {
       showToast('Failed to create note', 'error');
     }
@@ -568,11 +550,7 @@ export default function ProjectsWorkspace() {
   const handleSaveNote = async () => {
     if (!activeProject || !activeNote) return;
     try {
-      await fetch('/api/projects/' + activeProject.id + '/notes', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: activeNote.id, title: noteTitle, content: noteContent }),
-      });
+      updateProjectNoteStore(activeNote.id, noteTitle, noteContent);
       showToast('Note saved');
       setNoteModified(false);
       setActiveNote((prev) => (prev ? { ...prev, title: noteTitle, content: noteContent } : null));
@@ -590,11 +568,7 @@ export default function ProjectsWorkspace() {
       onConfirm: async () => {
         setConfirm(null);
         try {
-          await fetch('/api/projects/' + activeProject.id + '/notes', {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: noteId }),
-          });
+          deleteProjectNoteStore(noteId);
           showToast('Note deleted');
           if (activeNote?.id === noteId) { setActiveNote(null); setNoteContent(''); setNoteTitle(''); setNoteModified(false); }
           fetchNotes(activeProject.id);
@@ -631,11 +605,7 @@ export default function ProjectsWorkspace() {
   const handleCreateTask = async () => {
     if (!activeProject || !newTask.title.trim()) { showToast('Task title is required', 'error'); return; }
     try {
-      await fetch('/api/projects/' + activeProject.id + '/tasks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...newTask, status: 'todo' }),
-      });
+      createProjectTaskStore(activeProject.id, newTask.title, newTask.description, 'todo', newTask.priority);
       showToast('Task created');
       setShowNewTaskModal(false);
       setNewTask({ title: '', description: '', priority: 'medium' });
@@ -649,11 +619,7 @@ export default function ProjectsWorkspace() {
     if (!activeProject) return;
     setTasks((prev) => prev.map((t) => (t.id === taskId ? { ...t, status } : t)));
     try {
-      await fetch('/api/projects/' + activeProject.id + '/tasks', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: taskId, status }),
-      });
+      updateProjectTaskStore(taskId, { status });
     } catch {
       showToast('Failed to update task', 'error');
       fetchTasks(activeProject.id);
@@ -663,11 +629,7 @@ export default function ProjectsWorkspace() {
   const handleDeleteTask = async (taskId: string) => {
     if (!activeProject) return;
     try {
-      await fetch('/api/projects/' + activeProject.id + '/tasks', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: taskId }),
-      });
+      deleteProjectTaskStore(taskId);
       showToast('Task deleted');
       fetchTasks(activeProject.id);
     } catch {
@@ -1387,7 +1349,7 @@ export default function ProjectsWorkspace() {
         <div style={{ flex: 1, display: 'flex', gap: 12, padding: 16, overflowX: 'auto' }}>
           {columns.map((col) => {
             const colTasks = tasks.filter((t) => t.status === col.status);
-            const statusConf = STATUS_CONFIG[col.status];
+            const statusConf = STATUS_CONFIG[col.status as keyof typeof STATUS_CONFIG];
             const isDragOver = dragOverCol === col.status;
             return (
               <div
@@ -1433,7 +1395,7 @@ export default function ProjectsWorkspace() {
                       {isDragOver ? 'Drop here' : 'No tasks'}
                     </div>
                   ) : colTasks.map((task, i) => {
-                    const priority = PRIORITY_CONFIG[task.priority || 'medium'];
+                    const priority = PRIORITY_CONFIG[(task.priority || 'medium') as keyof typeof PRIORITY_CONFIG];
                     return (
                       <motion.div
                         key={task.id}
@@ -1502,7 +1464,7 @@ export default function ProjectsWorkspace() {
                                 flex: 1, padding: '4px 0', borderRadius: 6, fontSize: 9, fontWeight: 600,
                                 background: 'rgba(255, 255, 255, 0.03)',
                                 border: '1px solid rgba(255, 255, 255, 0.06)',
-                                color: STATUS_CONFIG[c.status].color,
+                                color: STATUS_CONFIG[c.status as keyof typeof STATUS_CONFIG].color,
                                 cursor: 'pointer', fontFamily: 'inherit',
                               }}
                               whileHover={{ background: 'rgba(255, 255, 255, 0.06)' }}

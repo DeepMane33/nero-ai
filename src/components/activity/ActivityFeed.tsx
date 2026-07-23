@@ -4,12 +4,27 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getActivities, addActivity, type ActivityType, type Activity } from '@/lib/client-activity'
 
-const activityConfig: Record<ActivityType, { icon: string; color: string; glow: string; label: string }> = {
-  chat: { icon: '\uD83D\uDCAC', color: '#38bdf8', glow: 'rgba(56, 189, 248, 0.3)', label: 'Chat' },
-  memory: { icon: '\uD83E\uDDE0', color: '#a855f7', glow: 'rgba(168, 85, 247, 0.3)', label: 'Memory' },
-  research: { icon: '\uD83D\uDD0D', color: '#34d399', glow: 'rgba(52, 211, 153, 0.3)', label: 'Research' },
-  project: { icon: '\uD83D\uDCC1', color: '#eab308', glow: 'rgba(234, 179, 8, 0.3)', label: 'Project' },
-  system: { icon: '\u2699\uFE0F', color: '#64748b', glow: 'rgba(100, 116, 139, 0.15)', label: 'System' },
+const activityConfig: Record<ActivityType, { icon: React.ReactNode; color: string; glow: string; label: string }> = {
+  chat: {
+    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+    color: '#94a3b8', glow: 'none', label: 'Chat',
+  },
+  memory: {
+    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>,
+    color: '#94a3b8', glow: 'none', label: 'Memory',
+  },
+  research: {
+    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
+    color: '#94a3b8', glow: 'none', label: 'Research',
+  },
+  project: {
+    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>,
+    color: '#94a3b8', glow: 'none', label: 'Project',
+  },
+  system: {
+    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+    color: '#94a3b8', glow: 'none', label: 'System',
+  },
 }
 
 const filterOptions: { key: ActivityType | 'all'; label: string }[] = [
@@ -224,14 +239,14 @@ export default function ActivityFeed() {
                   padding: '5px 12px',
                   borderRadius: '8px',
                   background: isActive
-                    ? (cfg ? cfg.color + '18' : 'rgba(176, 184, 196, 0.12)')
+                    ? 'rgba(255, 255, 255, 0.06)'
                     : undefined,
                   boxShadow: isActive
                     ? 'inset 2px 2px 4px rgba(0, 0, 0, 0.4), inset -2px -2px 4px rgba(40, 44, 52, 0.06)'
                     : undefined,
-                  border: isActive ? '1px solid ' + (cfg ? cfg.color + '30' : 'rgba(176, 184, 196, 0.2)') : undefined,
+                  border: isActive ? '1px solid rgba(255, 255, 255, 0.08)' : undefined,
                   color: isActive
-                    ? (cfg ? cfg.color : 'var(--accent)')
+                    ? 'rgba(255, 255, 255, 0.8)'
                     : 'var(--text-tertiary)',
                   fontSize: '11px',
                   fontFamily: "'JetBrains Mono', monospace",
@@ -243,7 +258,7 @@ export default function ActivityFeed() {
                   flexShrink: 0,
                 }}
               >
-                {cfg && <span style={{ fontSize: '12px' }}>{cfg.icon}</span>}
+                {cfg && <span style={{ display: 'flex', alignItems: 'center' }}>{cfg.icon}</span>}
                 {f.label}
                 <span style={{
                   fontSize: '10px',
@@ -381,13 +396,12 @@ export default function ActivityFeed() {
                           width: '36px',
                           height: '36px',
                           borderRadius: '10px',
-                          background: 'linear-gradient(135deg, ' + config.color + '22, ' + config.color + '08)',
-                          border: '1px solid ' + config.color + '33',
+                          background: 'rgba(255, 255, 255, 0.04)',
+                          border: '1px solid rgba(255, 255, 255, 0.06)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontSize: '16px',
-                          boxShadow: '0 0 12px ' + config.glow,
+                          color: 'rgba(255, 255, 255, 0.5)',
                           position: 'relative',
                           zIndex: 1,
                         }}>
@@ -430,9 +444,9 @@ export default function ActivityFeed() {
                               fontFamily: "'JetBrains Mono', monospace",
                               padding: '2px 6px',
                               borderRadius: '4px',
-                              background: config.color + '15',
-                              color: config.color,
-                              border: '1px solid ' + config.color + '25',
+                              background: 'rgba(255, 255, 255, 0.06)',
+                              color: 'rgba(255, 255, 255, 0.45)',
+                              border: '1px solid rgba(255, 255, 255, 0.06)',
                               flexShrink: 0,
                               textTransform: 'uppercase',
                             }}>

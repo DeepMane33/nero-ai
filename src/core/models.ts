@@ -128,9 +128,13 @@ export interface KeyValidationResult {
  */
 async function validateGeminiKey(apiKey: string): Promise<KeyValidationResult> {
   try {
+    const isOAuth = apiKey.startsWith('AQ.')
+    const headers: Record<string, string> = {}
+    if (isOAuth) headers['Authorization'] = `Bearer ${apiKey}`
+    const urlParam = isOAuth ? '' : `?key=${apiKey}`
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`,
-      { signal: AbortSignal.timeout(10000) }
+      `https://generativelanguage.googleapis.com/v1beta/models${urlParam}`,
+      { headers, signal: AbortSignal.timeout(10000) }
     )
     if (response.ok) {
       const data = await response.json()
@@ -565,6 +569,31 @@ export function getProviderStatus(): { id: string; name: string; available: bool
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Gemini API key format detection & auth helpers
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Detect the type of Gemini API key and return the correct auth config.
+ * - AIzaSy... keys (Google AI Studio): use ?key= query parameter
+ * - AQ... keys (Google Cloud OAuth tokens): use Authorization: Bearer header
+ * - Other keys: try ?key= first (most common)
+ */
+function buildGeminiAuth(apiKey: string): { urlParam: string; headers: Record<string, string> } {
+  if (apiKey.startsWith('AQ.')) {
+    // OAuth token — must use Authorization header, NOT query parameter
+    return {
+      urlParam: '',
+      headers: { 'Authorization': `Bearer ${apiKey}` }
+    }
+  }
+  // Standard AI Studio API key — use query parameter
+  return {
+    urlParam: `?key=${apiKey}`,
+    headers: {}
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // API call functions
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -619,20 +648,23 @@ async function callGeminiModel(
   const systemMessage = messages.find(m => m.role === 'system')
   const userMessages = messages.filter(m => m.role !== 'system')
   
-  // Ensure messages alternate correctly: first message must be from 'user'
+  // Build messages — filter out empty ones
   const geminiMessages = userMessages.map(m => ({
     role: m.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: m.content }]
-  })).filter(m => m.parts[0]?.text) // Filter out empty messages
+  })).filter(m => m.parts[0]?.text)
   
-  const url = `${provider.baseUrl}/models/${model.id}:streamGenerateContent?alt=sse&key=${apiKey}`
+  const auth = buildGeminiAuth(apiKey)
+  const keyParam = auth.urlParam ? `&${auth.urlParam.slice(1)}` : ''
+  const streamUrl = `${provider.baseUrl}/models/${model.id}:streamGenerateContent?alt=sse${keyParam}`
+  const nonStreamUrl = `${provider.baseUrl}/models/${model.id}:generateContent${auth.urlParam}`
   
-  console.log('[callGeminiModel] Request:', { model: model.id, messageCount: geminiMessages.length, hasSystem: !!systemMessage, url: url.replace(/key=.*/, 'key=***') })
+  console.log('[callGeminiModel] Request:', { model: model.id, messageCount: geminiMessages.length, hasSystem: !!systemMessage, authType: apiKey.startsWith('AQ.') ? 'Bearer' : 'key-param' })
   
   try {
-    const response = await fetch(url, {
+    const response = await fetch(streamUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...auth.headers },
       body: JSON.stringify({
         contents: geminiMessages,
         systemInstruction: systemMessage ? { parts: [{ text: systemMessage.content }] } : undefined,
@@ -728,10 +760,9 @@ async function callGeminiModel(
       // Streaming returned nothing — try non-streaming as fallback
       console.warn('[gemini] Streaming returned empty response, trying non-streaming...')
       try {
-        const nonStreamUrl = `${provider.baseUrl}/models/${model.id}:generateContent?key=${apiKey}`
         const nonStreamResponse = await fetch(nonStreamUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...auth.headers },
           body: JSON.stringify({
             contents: geminiMessages,
             systemInstruction: systemMessage ? { parts: [{ text: systemMessage.content }] } : undefined,

@@ -73,14 +73,20 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Build URL with query param
+    // Build URL with auth
     const baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
     const url = new URL(baseUrl);
-    url.searchParams.set('key', apiKey);
+    const isOAuth = apiKey.startsWith('AQ.')
+    const visionHeaders: Record<string, string> = { 'Content-Type': 'application/json' }
+    if (isOAuth) {
+      visionHeaders['Authorization'] = `Bearer ${apiKey}`
+    } else {
+      url.searchParams.set('key', apiKey);
+    }
 
     const geminiResponse = await fetch(url.toString(), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: visionHeaders,
       body: JSON.stringify({
         contents: [
           {

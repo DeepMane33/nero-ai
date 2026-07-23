@@ -77,11 +77,16 @@ export async function POST(request: NextRequest) {
       .replace(/([.!?])\s+/g, '$1  ')
       .replace(/,\s*/g, ', ');
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+    const isOAuth = apiKey.startsWith('AQ.')
+    const ttsHeaders: Record<string, string> = { 'Content-Type': 'application/json' }
+    if (isOAuth) ttsHeaders['Authorization'] = `Bearer ${apiKey}`
+    const ttsKeyParam = isOAuth ? '' : `?key=${apiKey}`
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent${ttsKeyParam}`;
 
     const geminiResponse = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: ttsHeaders,
       body: JSON.stringify({
         contents: [{
           parts: [{ text: cleanText }]

@@ -27,11 +27,17 @@ export async function POST(request: NextRequest) {
     const contextText = messages.slice(0, 3).map((m: { role: string; content: string }) => m.role + ': ' + m.content).join('\n');
 
     const url = new URL('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent');
-    url.searchParams.set('key', apiKey);
+    const isOAuth = apiKey.startsWith('AQ.')
+    const autoTitleHeaders: Record<string, string> = { 'Content-Type': 'application/json' }
+    if (isOAuth) {
+      autoTitleHeaders['Authorization'] = `Bearer ${apiKey}`
+    } else {
+      url.searchParams.set('key', apiKey);
+    }
 
     const geminiResponse = await fetch(url.toString(), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: autoTitleHeaders,
       body: JSON.stringify({
         contents: [{
           role: 'user',

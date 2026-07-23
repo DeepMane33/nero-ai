@@ -31,7 +31,7 @@ const SECTIONS = [
 
 // Provider descriptions for the UI
 const PROVIDER_INFO: Record<string, { description: string; signupUrl: string; signupLabel: string }> = {
-  gemini: { description: 'Google Gemini — fast, huge context window', signupUrl: 'https://aistudio.google.com/apikey', signupLabel: 'Get key from AI Studio' },
+  gemini: { description: 'Google Gemini — supports both AI Studio keys (AIzaSy...) and OAuth tokens (AQ...)', signupUrl: 'https://aistudio.google.com/apikey', signupLabel: 'Get key from AI Studio' },
 };
 
 export default function SettingsPanel() {

@@ -55,9 +55,13 @@ async function generateTitle(message: string): Promise<string> {
     let response: Response;
     
     if (provider.format === 'gemini') {
-      response = await fetch(`${provider.baseUrl}/models/${model.id}:generateContent?key=${apiKey}`, {
+      const isOAuth = apiKey.startsWith('AQ.')
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+      if (isOAuth) headers['Authorization'] = `Bearer ${apiKey}`
+      const urlParam = isOAuth ? '' : `?key=${apiKey}`
+      response = await fetch(`${provider.baseUrl}/models/${model.id}:generateContent${urlParam}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({
           contents: [{ role: 'user', parts: [{ text: message }] }],
           systemInstruction: { parts: [{ text: 'Generate a very short title (5-7 words max) for this conversation. Reply with ONLY the title, no quotes, no punctuation at the end.' }] },

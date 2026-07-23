@@ -8,6 +8,16 @@ import { resolveGeminiApiKey } from '@/core/models'
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models'
 const DEFAULT_MODEL = 'gemini-2.0-flash'
 
+/**
+ * Build auth for Gemini API — supports both AIzaSy keys and AQ OAuth tokens.
+ */
+function buildGeminiAuth(apiKey: string): { urlParam: string; headers: Record<string, string> } {
+  if (apiKey.startsWith('AQ.')) {
+    return { urlParam: '', headers: { 'Authorization': `Bearer ${apiKey}` } }
+  }
+  return { urlParam: `?key=${apiKey}`, headers: {} }
+}
+
 export interface ChatMessage {
   role: 'user' | 'model'
   parts: { text: string }[]
@@ -97,14 +107,18 @@ export async function chatCompletion(
     }
   }
 
+  const auth = buildGeminiAuth(apiKey)
+  const keyParam = auth.urlParam
+
   const endpoint = stream
-    ? `${GEMINI_API_URL}/${model}:streamGenerateContent?alt=sse&key=${apiKey}`
-    : `${GEMINI_API_URL}/${model}:generateContent?key=${apiKey}`
+    ? `${GEMINI_API_URL}/${model}:streamGenerateContent?alt=sse${keyParam ? '&' + keyParam.slice(1) : ''}`
+    : `${GEMINI_API_URL}/${model}:generateContent${keyParam}`
 
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      ...auth.headers,
     },
     body: JSON.stringify(body),
   })

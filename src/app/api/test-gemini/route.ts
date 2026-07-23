@@ -10,12 +10,17 @@ export async function POST(request: Request) {
       return Response.json({ error: 'No API key provided' }, { status: 400 })
     }
 
+    const isOAuth = apiKey.startsWith('AQ.')
+    const authHeaders: Record<string, string> = { 'Content-Type': 'application/json' }
+    if (isOAuth) authHeaders['Authorization'] = `Bearer ${apiKey}`
+    const keyParam = isOAuth ? '' : `?key=${apiKey}`
+
     // Step 1: Test with a simple non-streaming request
-    const testUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`
+    const testUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent${keyParam}`
     
     const response = await fetch(testUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders,
       body: JSON.stringify({
         contents: [{ role: 'user', parts: [{ text: 'Say hello in one word.' }] }],
         generationConfig: {
@@ -35,10 +40,10 @@ export async function POST(request: Request) {
     let streamTest: any = null
     if (status === 200) {
       try {
-        const streamUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse&key=${apiKey}`
+        const streamUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse${keyParam ? '&' + keyParam.slice(1) : ''}`
         const streamResponse = await fetch(streamUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: authHeaders,
           body: JSON.stringify({
             contents: [{ role: 'user', parts: [{ text: 'Say hello in one word.' }] }],
             generationConfig: {
@@ -74,6 +79,7 @@ export async function POST(request: Request) {
 
     return Response.json({
       model,
+      keyType: isOAuth ? 'OAuth Bearer (AQ token)' : 'API Key param (AIzaSy)',
       nonStreaming: {
         status,
         text: parsed?.candidates?.[0]?.content?.parts?.[0]?.text || null,

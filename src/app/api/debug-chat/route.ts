@@ -9,11 +9,16 @@ export async function POST(request: Request) {
     if (!message) return Response.json({ error: 'No message' }, { status: 400 })
     if (!apiKey) return Response.json({ error: 'No API key provided' }, { status: 400 })
 
+    const isOAuth = apiKey.startsWith('AQ.')
+    const authHeaders: Record<string, string> = { 'Content-Type': 'application/json' }
+    if (isOAuth) authHeaders['Authorization'] = `Bearer ${apiKey}`
+    const keyParam = isOAuth ? '' : `?key=${apiKey}`
+
     // Simple non-streaming call first to test
-    const testUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`
+    const testUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent${keyParam}`
     const testResp = await fetch(testUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders,
       body: JSON.stringify({
         contents: [{ role: 'user', parts: [{ text: message }] }],
         generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
@@ -26,6 +31,7 @@ export async function POST(request: Request) {
       return Response.json({
         error: `Gemini API error: ${testResp.status}`,
         details: testData?.error,
+        keyType: isOAuth ? 'OAuth Bearer' : 'API Key param',
         step: 'non-streaming-test'
       }, { status: 502 })
     }
@@ -36,6 +42,7 @@ export async function POST(request: Request) {
         error: 'Gemini returned empty content',
         candidates: testData?.candidates,
         promptFeedback: testData?.promptFeedback,
+        keyType: isOAuth ? 'OAuth Bearer' : 'API Key param',
         step: 'non-streaming-extract'
       }, { status: 502 })
     }
@@ -44,10 +51,10 @@ export async function POST(request: Request) {
     let streamText = ''
     let streamError = null
     try {
-      const streamUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse&key=${apiKey}`
+      const streamUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse${keyParam ? '&' + keyParam.slice(1) : ''}`
       const streamResp = await fetch(streamUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeaders,
         body: JSON.stringify({
           contents: [{ role: 'user', parts: [{ text: message }] }],
           generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
@@ -91,6 +98,7 @@ export async function POST(request: Request) {
 
     return Response.json({
       success: true,
+      keyType: isOAuth ? 'OAuth Bearer' : 'API Key param',
       nonStreaming: text,
       streaming: streamText || '(empty)',
       streamingError: streamError,

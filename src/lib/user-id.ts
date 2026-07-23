@@ -5,9 +5,19 @@
 
 const USER_ID_KEY = 'nero-user-id'
 
-export function getUserId(): string {
-  if (typeof window === 'undefined') return 'default'
+/**
+ * Get user ID. On the server, extracts from x-user-id header.
+ * On the client, generates/stores in localStorage.
+ */
+export function getUserId(request?: Request): string {
+  // Server-side: extract from request headers
+  if (typeof window === 'undefined') {
+    const headerId = request?.headers?.get('x-user-id')
+    if (headerId && headerId !== 'undefined' && headerId !== 'null') return headerId
+    return 'default'
+  }
   
+  // Client-side: generate and persist
   let id = localStorage.getItem(USER_ID_KEY)
   if (!id) {
     id = crypto.randomUUID()

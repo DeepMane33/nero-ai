@@ -605,10 +605,11 @@ async function callGeminiModel(
   const systemMessage = messages.find(m => m.role === 'system')
   const userMessages = messages.filter(m => m.role !== 'system')
   
+  // Ensure messages alternate correctly: first message must be from 'user'
   const geminiMessages = userMessages.map(m => ({
     role: m.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: m.content }]
-  }))
+  })).filter(m => m.parts[0]?.text) // Filter out empty messages
   
   const url = `${provider.baseUrl}/models/${model.id}:streamGenerateContent?alt=sse&key=${apiKey}`
   
@@ -622,17 +623,33 @@ async function callGeminiModel(
         generationConfig: {
           temperature: 0.7,
           maxOutputTokens: 4096
-        }
+        },
+        safetySettings: [
+          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+        ]
       })
     })
     
     if (!response.ok) {
       const errText = await response.text().catch(() => 'Unknown error')
+      // Provide specific guidance for common error codes
+      if (response.status === 400) {
+        throw new Error(`Gemini API error 400 (Bad Request): ${errText}. Check that the API key is valid and the model name is correct.`)
+      }
+      if (response.status === 403) {
+        throw new Error(`Gemini API error 403 (Forbidden): ${errText}. The API key may not have access to this model. Enable the Gemini API in Google AI Studio.`)
+      }
+      if (response.status === 429) {
+        throw new Error(`Gemini API error 429 (Rate Limited): ${errText}. You've exceeded the free tier limit. Wait a minute or use a different API key.`)
+      }
       throw new Error(`Gemini API error ${response.status}: ${errText}`)
     }
     
     const reader = response.body?.getReader()
-    if (!reader) throw new Error('No response stream')
+    if (!reader) throw new Error('No response stream from Gemini API')
     
     const decoder = new TextDecoder()
     let fullResponse = ''
@@ -653,13 +670,28 @@ async function callGeminiModel(
         
         try {
           const parsed = JSON.parse(data)
+          // Check for API-level errors in the stream
+          if (parsed.error) {
+            throw new Error(parsed.error.message || parsed.error.status || 'Gemini API error in stream')
+          }
           const content = parsed?.candidates?.[0]?.content?.parts?.[0]?.text
           if (content) {
             fullResponse += content
             callbacks.onToken(content)
+          } else if (parsed?.candidates?.length === 0) {
+            // Empty candidates — API returned 200 but no content (safety filter, empty key, etc.)
+            const finishReason = parsed?.candidates?.[0]?.finishReason
+            console.warn('[gemini] Empty candidates response. finishReason:', finishReason, 'promptFeedback:', JSON.stringify(parsed?.promptFeedback))
           }
-        } catch { /* skip malformed */ }
+        } catch (e) {
+          // If it's our explicit error, rethrow; otherwise skip malformed chunks
+          if (e instanceof Error && (e.message.includes('Gemini API error') || e.message.includes('API key'))) throw e
+        }
       }
+    }
+    
+    if (!fullResponse) {
+      throw new Error('Gemini returned an empty response. This usually means the API key is invalid, the model is rate-limited, or the content was blocked by safety filters. Try a different API key or model.')
     }
     
     callbacks.onComplete(fullResponse)
@@ -830,13 +862,16 @@ export async function callWithFailover(
   const allPaths = [...priorities, ...customPaths]
 
   let lastError: Error | null = null
+  let anyModelFound = false
 
   for (const modelPath of allPaths) {
     const result = findModel(modelPath)
     if (!result) {
-      console.log('[failover] Skipping', modelPath, '- findModel returned null')
+      console.log('[failover] Skipping', modelPath, '- no API key or model not found')
       continue
     }
+
+    anyModelFound = true
 
     // Extract provider ID from modelPath
     const providerId = modelPath.split('/')[0]
@@ -914,5 +949,9 @@ export async function callWithFailover(
     }
   }
 
-  throw new Error(lastError?.message || 'All models failed. Add an API key in Settings or .env.local.')
+  if (!anyModelFound) {
+    throw new Error('No API keys configured. Go to Settings and add your Gemini API key to start chatting.')
+  }
+
+  throw new Error(lastError?.message || 'All models failed. Please check your API key in Settings and try again.')
 }

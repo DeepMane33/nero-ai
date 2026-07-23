@@ -1,4 +1,4 @@
-import { getProviderStatus, getAvailableModels } from '@/core/models';
+import { getProviderStatus, getAvailableModels, validateApiKey } from '@/core/models';
 
 /**
  * GET /api/models — Returns available models and provider status.
@@ -31,6 +31,24 @@ export async function GET() {
       })),
       totalModels: availableModels.length
     });
+  } catch (err: any) {
+    return Response.json({ error: err.message }, { status: 500 });
+  }
+}
+
+/**
+ * POST /api/models — Validate an API key or get provider status.
+ */
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    
+    if (body.action === 'validate' && body.providerId && body.apiKey) {
+      const result = await validateApiKey(body.providerId, body.apiKey);
+      return Response.json(result);
+    }
+    
+    return Response.json({ error: 'Invalid action' }, { status: 400 });
   } catch (err: any) {
     return Response.json({ error: err.message }, { status: 500 });
   }

@@ -304,7 +304,7 @@ export async function POST(request: Request) {
               fullResponse = response;
             },
             onError: (error) => {
-              console.error('Model error:', error);
+              console.error('Model error:', error.message);
               controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: error.message })}\n\n`));
             }
           });
@@ -312,9 +312,11 @@ export async function POST(request: Request) {
           usedProvider = result.provider;
           usedModel = result.model;
         } catch (err: any) {
-          console.error('All models failed:', err);
-          const errorMsg = err?.message?.includes('API key')
-            ? 'No valid API keys found. Please add at least one API key in .env.local (GEMINI_API_KEY or GROQ_API_KEY).'
+          console.error('All models failed:', err?.message || err);
+          const errorMsg = err?.message?.includes('API key') || err?.message?.includes('No API key')
+            ? 'No valid API keys found. Please go to Settings and add your Gemini API key.'
+            : err?.message?.includes('empty response')
+            ? `Nero received an empty response from the AI. This usually means:\n• Your API key may be invalid or expired\n• The free tier quota may be exceeded\n• Content was blocked by safety filters\n\nPlease check your API key in Settings or try again.`
             : `AI service unavailable: ${err?.message || 'Unknown error'}. Please try again.`;
           controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: errorMsg })}\n\n`));
         }

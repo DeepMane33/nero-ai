@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
-import { getAuthHeaders } from '@/lib/user-id';
 
 interface Model {
   id: string;
@@ -23,20 +22,12 @@ interface ProviderStatus {
   isCustom: boolean;
 }
 
-interface MemoryStats {
-  totalEntries: number;
-  conversations: number;
-  knowledgeNodes: number;
-  sizeBytes: number;
-}
+const ACCENT_COLORS = ['#c0c0c0', '#94a3b8', '#7b8da4', '#b4a0d4', '#7ec8e3', '#8fb996'];
 
 const SECTIONS = [
   { id: 'model', label: 'Model Selection', icon: '◆' },
   { id: 'theme', label: 'Theme', icon: '◈' },
-  { id: 'memory', label: 'Memory', icon: '▣' },
 ];
-
-const ACCENT_COLORS = ['#c0c0c0', '#94a3b8', '#7b8da4', '#b4a0d4', '#7ec8e3', '#8fb996'];
 
 // Provider descriptions for the UI
 const PROVIDER_INFO: Record<string, { description: string; signupUrl: string; signupLabel: string }> = {
@@ -52,10 +43,8 @@ export default function SettingsPanel() {
   const [customApiKey, setCustomApiKey] = useState('');
   const [keyValidating, setKeyValidating] = useState(false);
   const [keyStatus, setKeyStatus] = useState<{ provider: string; valid: boolean; message: string } | null>(null);
-  const [memoryStats, setMemoryStats] = useState<MemoryStats | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [confirmClear, setConfirmClear] = useState(false);
 
   // Custom provider form state — simplified: just provider name + API key
   const [showCustomForm, setShowCustomForm] = useState(false);
@@ -70,7 +59,6 @@ export default function SettingsPanel() {
   useEffect(() => {
     fetchProviders();
     loadSettings();
-    fetchMemoryStats();
   }, []);
 
   function fetchProviders() {
@@ -82,23 +70,6 @@ export default function SettingsPanel() {
     setProviders([
       { id: 'gemini', name: displayName + (fallbackKey ? ' + Fallback' : ''), available: true, modelCount: 2, hasCustomKey: !!savedKey, isActive: !!savedKey, isCustom: false },
     ]);
-  }
-
-  async function fetchMemoryStats() {
-    try {
-      const res = await fetch('/api/memory/stats');
-      if (res.ok) {
-        const data = await res.json();
-        setMemoryStats(data);
-      }
-    } catch {
-      setMemoryStats({
-        totalEntries: 1247,
-        conversations: 89,
-        knowledgeNodes: 342,
-        sizeBytes: 2_450_000,
-      });
-    }
   }
 
   function loadSettings() {
@@ -126,22 +97,35 @@ export default function SettingsPanel() {
     }
   }
 
-  async function clearMemory(type: string) {
-    try {
-      await fetch('/api/memory', { method: 'DELETE', body: JSON.stringify({ type }), headers: { 'Content-Type': 'application/json', ...getAuthHeaders() } });
-      fetchMemoryStats();
-      setConfirmClear(false);
-    } catch {}
-  }
-
-  function handleAddApiKey(providerId: string) {
+  async function handleAddApiKey(providerId: string) {
     if (!customApiKey.trim()) return;
-    // Save to localStorage only — no server call
-    localStorage.setItem('nero-gemini-key', customApiKey.trim());
-    setKeyStatus({ provider: providerId, valid: true, message: 'Key saved! Nero will use this key.' });
-    setCustomApiKey('');
-    fetchProviders();
-    setTimeout(() => setKeyStatus(null), 4000);
+    setKeyValidating(true);
+    try {
+      // Validate the key before saving
+      const response = await fetch('/api/models', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'validate', providerId, apiKey: customApiKey.trim() }),
+      });
+      const result = await response.json();
+      if (result.valid) {
+        localStorage.setItem('nero-gemini-key', customApiKey.trim());
+        setKeyStatus({ provider: providerId, valid: true, message: 'Key validated and saved! Nero will use this key.' });
+        setCustomApiKey('');
+        fetchProviders();
+      } else {
+        setKeyStatus({ provider: providerId, valid: false, message: `Invalid key: ${result.error || 'Could not validate'}. Please check your API key.` });
+      }
+    } catch {
+      // If validation endpoint fails, save anyway (might be a network issue)
+      localStorage.setItem('nero-gemini-key', customApiKey.trim());
+      setKeyStatus({ provider: providerId, valid: true, message: 'Key saved (validation skipped due to network error).' });
+      setCustomApiKey('');
+      fetchProviders();
+    } finally {
+      setKeyValidating(false);
+      setTimeout(() => setKeyStatus(null), 6000);
+    }
   }
 
   function handleRemoveApiKey() {
@@ -152,31 +136,43 @@ export default function SettingsPanel() {
     setTimeout(() => setKeyStatus(null), 3000);
   }
 
-  function handleAddCustomProvider() {
+  async function handleAddCustomProvider() {
     if (!customForm.name.trim() || !customForm.apiKey.trim()) return;
 
     setCustomFormValidating(true);
     setCustomFormStatus(null);
 
-    // Save directly to localStorage — no server call, no key leaves the browser
+    try {
+      // Validate the key before saving
+      const response = await fetch('/api/models', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'validate', providerId: 'gemini', apiKey: customForm.apiKey.trim() }),
+      });
+      const result = await response.json();
+      
+      if (!result.valid) {
+        setCustomFormStatus({ valid: false, message: `Invalid API key: ${result.error || 'Could not validate'}. Please check your key.` });
+        setCustomFormValidating(false);
+        return;
+      }
+    } catch {
+      // If validation fails due to network, proceed with save
+    }
+
+    // Save to localStorage
     localStorage.setItem('nero-gemini-key', customForm.apiKey.trim());
     localStorage.setItem('nero-gemini-name', customForm.name.trim());
     if (customForm.fallbackKey?.trim()) {
       localStorage.setItem('nero-gemini-key-fallback', customForm.fallbackKey.trim());
     }
 
-    setCustomFormStatus({ valid: true, message: `"${customForm.name}" added! Nero will use this key.` });
+    setCustomFormStatus({ valid: true, message: `"${customForm.name}" added and validated! Nero will use this key.` });
     setCustomForm({ name: '', apiKey: '', fallbackKey: '' });
     setShowCustomForm(false);
     fetchProviders();
     setTimeout(() => setCustomFormStatus(null), 5000);
     setCustomFormValidating(false);
-  }
-
-  function formatBytes(bytes: number): string {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / 1048576).toFixed(1) + ' MB';
   }
 
   const sectionVariants = {
@@ -544,91 +540,6 @@ export default function SettingsPanel() {
             </motion.div>
           )}
 
-          {/* MEMORY MANAGEMENT */}
-          {activeSection === 'memory' && (
-            <motion.div key="memory" variants={sectionVariants} initial="hidden" animate="visible" exit="exit" transition={{ duration: 0.2 }}>
-              <h2 className="text-lg font-bold mb-1" style={{ color: '#b0b8c4' }}>Memory Management</h2>
-              <p className="text-xs mb-6" style={{ color: 'rgba(255,255,255,0.35)' }}>Manage stored conversations, knowledge, and memory</p>
-
-              {memoryStats && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 max-w-2xl">
-                  {[
-                    { label: 'Total Entries', value: (memoryStats.totalEntries ?? 0).toLocaleString(), color: '#94a3b8' },
-                    { label: 'Conversations', value: (memoryStats.conversations ?? 0).toLocaleString(), color: '#7ec8e3' },
-                    { label: 'Knowledge Nodes', value: (memoryStats.knowledgeNodes ?? 0).toLocaleString(), color: '#b4a0d4' },
-                    { label: 'Storage Used', value: formatBytes(memoryStats.sizeBytes ?? 0), color: '#c8b86a' },
-                  ].map(s => (
-                    <div key={s.label} className="p-4 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <div className="text-2xl font-bold" style={{ color: s.color }}>{s.value}</div>
-                      <div className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <div className="space-y-3 max-w-lg">
-                <div className="p-4 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-bold" style={{ color: 'rgba(255,255,255,0.7)' }}>Conversation History</span>
-                    <button onClick={() => { setConfirmClear(true); setActiveSection('memory'); }}
-                      className="text-xs px-3 py-1 rounded"
-                      style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.2)' }}
-                    >
-                      Clear All
-                    </button>
-                  </div>
-                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                    Stored conversation history for context and memory.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-bold" style={{ color: 'rgba(255,255,255,0.7)' }}>Export Data</span>
-                    <button
-                      onClick={() => { const a = document.createElement('a'); a.href = '/api/memory/export'; a.download = 'nero-memory-export.json'; a.click(); }}
-                      className="text-xs px-3 py-1 rounded"
-                      style={{ background: 'rgba(176,184,196,0.1)', color: '#b0b8c4', border: '1px solid rgba(176,184,196,0.2)' }}
-                    >
-                      Export JSON
-                    </button>
-                  </div>
-                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                    Download all memory data as a JSON file.
-                  </p>
-                </div>
-              </div>
-
-              {/* Confirm Clear Modal */}
-              <AnimatePresence>
-                {confirmClear && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    className="fixed inset-0 flex items-center justify-center z-50" style={{ background: 'rgba(0,0,0,0.6)' }}
-                  >
-                    <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-                      className="p-6 rounded-xl max-w-sm w-full mx-4"
-                      style={{ background: 'rgba(10,14,26,0.95)', border: '1px solid rgba(239,68,68,0.2)', backdropFilter: 'blur(12px)' }}
-                    >
-                      <h3 className="text-base font-bold mb-2" style={{ color: '#ef4444' }}>Confirm Clear</h3>
-                      <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                        This will permanently delete all conversation history. This action cannot be undone.
-                      </p>
-                      <div className="flex gap-2 justify-end">
-                        <button onClick={() => setConfirmClear(false)} className="px-4 py-2 rounded text-sm"
-                          style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                          Cancel
-                        </button>
-                        <button onClick={() => clearMemory('conversations')} className="px-4 py-2 rounded text-sm font-bold"
-                          style={{ background: 'rgba(239,68,68,0.15)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.3)' }}>
-                          Clear All
-                        </button>
-                      </div>
-                    </motion.div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          )}
         </AnimatePresence>
       </div>
     </div>

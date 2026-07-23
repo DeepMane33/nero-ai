@@ -125,7 +125,7 @@ export async function POST(request: Request) {
     const hasKey = !!(process.env.GEMINI_API_KEY || clientApiKey);
     if (!hasKey) {
       return Response.json({
-        error: 'No API key configured. Go to Settings and add your Gemini API key.'
+        error: 'Nero is not configured yet. The API key is being set up.'
       }, { status: 500 });
     }
 

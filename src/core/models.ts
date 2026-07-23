@@ -311,31 +311,45 @@ const providers: Record<string, ModelProvider> = {
 const brainModelPriority: Record<string, string[]> = {
   reasoning: [
     'gemini/gemini-2.5-flash',
+    'gemini/gemini-2.0-flash',
     'gemini_fallback/gemini-2.5-flash',
+    'gemini_fallback/gemini-2.0-flash',
   ],
   coding: [
     'gemini/gemini-2.5-flash',
+    'gemini/gemini-2.0-flash',
     'gemini_fallback/gemini-2.5-flash',
+    'gemini_fallback/gemini-2.0-flash',
   ],
   research: [
     'gemini/gemini-2.5-flash',
+    'gemini/gemini-2.0-flash',
     'gemini_fallback/gemini-2.5-flash',
+    'gemini_fallback/gemini-2.0-flash',
   ],
   creative: [
     'gemini/gemini-2.5-flash',
+    'gemini/gemini-2.0-flash',
     'gemini_fallback/gemini-2.5-flash',
+    'gemini_fallback/gemini-2.0-flash',
   ],
   memory: [
     'gemini/gemini-2.0-flash',
+    'gemini/gemini-2.5-flash',
     'gemini_fallback/gemini-2.0-flash',
+    'gemini_fallback/gemini-2.5-flash',
   ],
   learning: [
     'gemini/gemini-2.5-flash',
+    'gemini/gemini-2.0-flash',
     'gemini_fallback/gemini-2.5-flash',
+    'gemini_fallback/gemini-2.0-flash',
   ],
   automation: [
     'gemini/gemini-2.0-flash',
+    'gemini/gemini-2.5-flash',
     'gemini_fallback/gemini-2.0-flash',
+    'gemini_fallback/gemini-2.5-flash',
   ]
 }
 
@@ -613,6 +627,8 @@ async function callGeminiModel(
   
   const url = `${provider.baseUrl}/models/${model.id}:streamGenerateContent?alt=sse&key=${apiKey}`
   
+  console.log('[callGeminiModel] Request:', { model: model.id, messageCount: geminiMessages.length, hasSystem: !!systemMessage, url: url.replace(/key=.*/, 'key=***') })
+  
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -635,6 +651,7 @@ async function callGeminiModel(
     
     if (!response.ok) {
       const errText = await response.text().catch(() => 'Unknown error')
+      console.error('[callGeminiModel] HTTP error:', response.status, errText.slice(0, 300))
       // Provide specific guidance for common error codes
       if (response.status === 400) {
         throw new Error(`Gemini API error 400 (Bad Request): ${errText}. Check that the API key is valid and the model name is correct.`)
@@ -650,6 +667,8 @@ async function callGeminiModel(
     
     const reader = response.body?.getReader()
     if (!reader) throw new Error('No response stream from Gemini API')
+    
+    console.log('[callGeminiModel] Stream started, response status:', response.status, 'content-type:', response.headers.get('content-type'))
     
     const decoder = new TextDecoder()
     let fullResponse = ''
@@ -674,14 +693,27 @@ async function callGeminiModel(
           if (parsed.error) {
             throw new Error(parsed.error.message || parsed.error.status || 'Gemini API error in stream')
           }
-          const content = parsed?.candidates?.[0]?.content?.parts?.[0]?.text
-          if (content) {
-            fullResponse += content
-            callbacks.onToken(content)
-          } else if (parsed?.candidates?.length === 0) {
-            // Empty candidates — API returned 200 but no content (safety filter, empty key, etc.)
-            const finishReason = parsed?.candidates?.[0]?.finishReason
-            console.warn('[gemini] Empty candidates response. finishReason:', finishReason, 'promptFeedback:', JSON.stringify(parsed?.promptFeedback))
+          
+          const candidate = parsed?.candidates?.[0]
+          if (!candidate) continue
+          
+          // Extract text from content parts (handles both text and thought parts)
+          const parts = candidate.content?.parts || []
+          for (const part of parts) {
+            if (part.text) {
+              fullResponse += part.text
+              callbacks.onToken(part.text)
+            }
+          }
+          
+          // Log finish reason for debugging
+          if (candidate.finishReason) {
+            console.log('[gemini] Finish reason:', candidate.finishReason)
+          }
+          
+          // Log prompt feedback for debugging
+          if (parsed?.promptFeedback) {
+            console.log('[gemini] Prompt feedback:', JSON.stringify(parsed.promptFeedback))
           }
         } catch (e) {
           // If it's our explicit error, rethrow; otherwise skip malformed chunks
@@ -690,7 +722,50 @@ async function callGeminiModel(
       }
     }
     
+    console.log('[callGeminiModel] Stream ended. Response length:', fullResponse.length, 'chars')
+    
     if (!fullResponse) {
+      // Streaming returned nothing — try non-streaming as fallback
+      console.warn('[gemini] Streaming returned empty response, trying non-streaming...')
+      try {
+        const nonStreamUrl = `${provider.baseUrl}/models/${model.id}:generateContent?key=${apiKey}`
+        const nonStreamResponse = await fetch(nonStreamUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: geminiMessages,
+            systemInstruction: systemMessage ? { parts: [{ text: systemMessage.content }] } : undefined,
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 4096
+            },
+            safetySettings: [
+              { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+            ]
+          })
+        })
+        
+        if (nonStreamResponse.ok) {
+          const nonStreamData = await nonStreamResponse.json()
+          const text = nonStreamData?.candidates?.[0]?.content?.parts?.[0]?.text
+          if (text) {
+            console.log('[gemini] Non-streaming fallback succeeded')
+            callbacks.onToken(text)
+            callbacks.onComplete(text)
+            return
+          }
+          console.warn('[gemini] Non-streaming also empty. Candidates:', JSON.stringify(nonStreamData?.candidates?.slice(0, 2)), 'PromptFeedback:', JSON.stringify(nonStreamData?.promptFeedback))
+        } else {
+          const errText = await nonStreamResponse.text().catch(() => 'Unknown')
+          console.warn('[gemini] Non-streaming fallback failed:', nonStreamResponse.status, errText)
+        }
+      } catch (fallbackErr) {
+        console.warn('[gemini] Non-streaming fallback error:', fallbackErr)
+      }
+      
       throw new Error('Gemini returned an empty response. This usually means the API key is invalid, the model is rate-limited, or the content was blocked by safety filters. Try a different API key or model.')
     }
     

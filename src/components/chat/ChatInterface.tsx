@@ -6,6 +6,7 @@ import MessageBubble from '@/components/chat/MessageBubble'
 import GlowButton from '@/components/ui/GlowButton'
 import { getAuthHeaders } from '@/lib/user-id'
 import { getMemories, addMemory } from '@/lib/client-memory'
+import { addActivity } from '@/lib/client-activity'
 
 type PersonalityType = 'normal' | 'waifu'
 
@@ -507,6 +508,22 @@ export default function ChatInterface({ activeConversationId, onConversationCrea
               confidenceData = parsed.confidence.confidence || null
               continue
             }
+            if (parsed.error) {
+              // Server sent an error message — display it to the user
+              fullContent = `⚠️ ${parsed.error}`
+              setMessages((prev) =>
+                prev.map((m) =>
+                  m.id === assistantId
+                    ? { ...m, content: fullContent, brainUsed: metadata.brainUsed, provider: metadata.provider, model: metadata.model }
+                    : m
+                )
+              )
+              continue
+            }
+            if (parsed.toolResults) {
+              // Tool results — don't display raw, they'll be incorporated in follow-up
+              continue
+            }
             if (parsed.content) {
               fullContent += parsed.content
               setMessages((prev) =>
@@ -559,6 +576,11 @@ export default function ChatInterface({ activeConversationId, onConversationCrea
       if (fullContent && shouldSpeak) speakWithEdgeTTS(fullContent)
 
       if (fullContent) onMoodChange?.()
+
+      // Log chat activity to localStorage
+      if (fullContent) {
+        addActivity('chat', `Chat with Nero`, fullContent.slice(0, 120), 'conversation')
+      }
     } catch (err: any) {
       if (err.name === 'AbortError') return
       addToast(err.message || 'Failed to get response', 'error')

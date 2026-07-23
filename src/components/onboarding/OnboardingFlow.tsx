@@ -14,16 +14,10 @@ const STEPS = [
     icon: '🧠',
   },
   {
-    title: 'Set Up API Keys',
-    subtitle: 'Connect to AI providers',
-    description: 'Nero works with free API tiers. The easiest option is Google Gemini (free). You can also use Groq, OpenRouter, or Anthropic Claude.',
-    icon: '🔑',
-  },
-  {
-    title: 'Choose Your Model',
-    subtitle: 'Pick the best AI for your needs',
-    description: 'Nero automatically routes to the best model for each task. You can also manually select a model in Settings.',
-    icon: '⚡',
+    title: 'Ready to Go',
+    subtitle: 'No setup needed — Nero has everything',
+    description: 'Nero comes with a built-in Gemini API key. Just open the chat and start talking. No accounts, no API keys, no configuration.',
+    icon: '✅',
   },
   {
     title: 'Start a Conversation',
@@ -104,16 +98,6 @@ export default function OnboardingFlow({ onComplete }: { onComplete: () => void 
           <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text-secondary)' }}>
             {current.description}
           </p>
-
-          {/* Step 1: API Key hint */}
-          {step === 1 && (
-            <div className="mb-6 p-3 rounded-lg text-left text-xs" style={{ background: 'var(--accent-subtle)', border: '1px solid var(--border-hover)', color: 'var(--text-secondary)' }}>
-              <strong style={{ color: 'var(--accent)' }}>Quick start:</strong> Get a free Gemini API key at{' '}
-              <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)' }}>
-                aistudio.google.com/apikey
-              </a>
-            </div>
-          )}
 
           {/* Progress dots */}
           <div className="flex items-center justify-center gap-2 mb-6">

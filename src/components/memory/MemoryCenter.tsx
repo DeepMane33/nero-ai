@@ -32,14 +32,14 @@ type Category = (typeof CATEGORIES)[number]
 
 const CATEGORY_COLORS: Record<string, { bg: string; border: string; text: string }> = {
   identity: {
-    bg: 'rgba(148, 163, 184, 0.08)',
-    border: 'rgba(148, 163, 184, 0.2)',
-    text: '#94a3b8',
+    bg: '#111111',
+    border: '#222222',
+    text: '#808080',
   },
   location: {
     bg: 'rgba(126, 221, 214, 0.08)',
     border: 'rgba(126, 221, 214, 0.2)',
-    text: '#7eddd6',
+    text: '#c0c0c0',
   },
   work: {
     bg: 'rgba(180, 160, 212, 0.08)',
@@ -49,12 +49,12 @@ const CATEGORY_COLORS: Record<string, { bg: string; border: string; text: string
   preferences: {
     bg: 'rgba(126, 200, 227, 0.08)',
     border: 'rgba(126, 200, 227, 0.2)',
-    text: '#7ec8e3',
+    text: '#808080',
   },
   projects: {
     bg: 'rgba(126, 221, 214, 0.08)',
     border: 'rgba(126, 221, 214, 0.2)',
-    text: '#7eddd6',
+    text: '#c0c0c0',
   },
   notes: {
     bg: 'rgba(143, 185, 150, 0.06)',
@@ -67,8 +67,8 @@ const CATEGORY_COLORS: Record<string, { bg: string; border: string; text: string
     text: '#c8b86a',
   },
   general: {
-    bg: 'rgba(255, 255, 255, 0.04)',
-    border: 'rgba(255, 255, 255, 0.08)',
+    bg: '#0a0a0a',
+    border: '#0a0a0a',
     text: 'rgba(156, 179, 201, 0.5)',
   },
 }
@@ -314,9 +314,9 @@ export default function MemoryCenter() {
       <div
         className="shrink-0 px-6 py-4 relative z-10"
         style={{
-          borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
-          background: 'rgba(10, 11, 15, 0.8)',
-          backdropFilter: 'blur(12px)',
+          borderBottom: '2px solid #333333',
+          background: '#050505',
+
         }}
       >
         <div className="flex items-center justify-between mb-4">
@@ -343,7 +343,7 @@ export default function MemoryCenter() {
             {/* View toggle */}
             <div
               className="flex rounded-lg overflow-hidden"
-              style={{ border: '1px solid rgba(255, 255, 255, 0.06)' }}
+              style={{ border: '2px solid #333333' }}
             >
               <button
                 onClick={() => setActiveView('grid')}
@@ -352,7 +352,7 @@ export default function MemoryCenter() {
                   background:
                     activeView === 'grid'
                       ? 'var(--accent-dim)'
-                      : 'rgba(255, 255, 255, 0.03)',
+                      : '#0a0a0a',
                   color:
                     activeView === 'grid' ? 'var(--accent)' : 'rgba(255, 255, 255, 0.3)',
                 }}
@@ -366,7 +366,7 @@ export default function MemoryCenter() {
                   background:
                     activeView === 'timeline'
                       ? 'var(--accent-dim)'
-                      : 'rgba(255, 255, 255, 0.03)',
+                      : '#0a0a0a',
                   color:
                     activeView === 'timeline' ? 'var(--accent)' : 'rgba(255, 255, 255, 0.3)',
                 }}
@@ -380,8 +380,8 @@ export default function MemoryCenter() {
               onClick={handleExport}
               className="px-3 py-1.5 rounded-lg text-[10px] font-mono tracking-wider cursor-pointer"
               style={{
-                background: 'rgba(255, 255, 255, 0.03)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
+                background: '#0a0a0a',
+                border: '2px solid #333333',
                 color: 'rgba(255, 255, 255, 0.4)',
               }}
               whileHover={{ scale: 1.02 }}
@@ -397,10 +397,10 @@ export default function MemoryCenter() {
               style={{
                 background: showDashboard
                   ? 'var(--accent-dim)'
-                  : 'rgba(255, 255, 255, 0.03)',
+                  : '#0a0a0a',
                 border: '1px solid ' + (showDashboard
-                  ? 'rgba(148, 163, 184, 0.3)'
-                  : 'rgba(255, 255, 255, 0.06)'),
+                  ? '#333333'
+                  : '#0a0a0a'),
                 color: showDashboard ? 'var(--accent)' : 'rgba(255, 255, 255, 0.4)',
               }}
               whileHover={{ scale: 1.02 }}
@@ -489,10 +489,10 @@ export default function MemoryCenter() {
                 className="px-3 py-1.5 rounded-lg text-xs font-mono tracking-wider capitalize shrink-0 cursor-pointer"
                 style={{
                   background:
-                    activeCategory === cat ? catColors.bg : 'rgba(255, 255, 255, 0.03)',
+                    activeCategory === cat ? catColors.bg : '#0a0a0a',
                   border:
                     '1px solid ' +
-                    (activeCategory === cat ? catColors.border : 'rgba(255, 255, 255, 0.06)'),
+                    (activeCategory === cat ? catColors.border : '#0a0a0a'),
                   color: activeCategory === cat ? catColors.text : 'rgba(255, 255, 255, 0.4)',
                 }}
                 whileHover={{ scale: 1.02 }}
@@ -642,7 +642,7 @@ export default function MemoryCenter() {
                 {/* Visual bar */}
                 <div
                   className="flex rounded-full overflow-hidden h-1.5 mt-3"
-                  style={{ background: 'rgba(255, 255, 255, 0.03)' }}
+                  style={{ background: '#0a0a0a' }}
                 >
                   {Object.entries(stats.byCategory).map(([cat, count]) => {
                     const catColors = CATEGORY_COLORS[cat] || CATEGORY_COLORS.general
@@ -788,7 +788,7 @@ export default function MemoryCenter() {
                             className="rounded-lg p-3 group-hover:scale-[1.01] transition-transform"
                             style={{
                               background: 'rgba(255, 255, 255, 0.02)',
-                              border: '1px solid rgba(255, 255, 255, 0.05)',
+                              border: '2px solid #333333',
                             }}
                           >
                             <div className="flex items-center justify-between mb-1.5">
@@ -845,7 +845,7 @@ export default function MemoryCenter() {
                                 onClick={() => openEditModal(memory)}
                                 className="px-2 py-0.5 rounded text-[9px] font-mono cursor-pointer"
                                 style={{
-                                  background: 'rgba(148, 163, 184, 0.08)',
+                                  background: '#111111',
                                   color: 'rgba(148, 163, 184, 0.6)',
                                 }}
                               >
@@ -871,7 +871,7 @@ export default function MemoryCenter() {
                                 className="mt-1.5 flex items-center gap-2 p-2 rounded-lg"
                                 style={{
                                   background: 'rgba(248, 113, 113, 0.06)',
-                                  border: '1px solid rgba(248, 113, 113, 0.15)',
+                                  border: '2px solid #333333',
                                 }}
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: 'auto' }}
@@ -888,7 +888,7 @@ export default function MemoryCenter() {
                                   className="px-2 py-0.5 rounded text-[9px] font-mono cursor-pointer"
                                   style={{
                                     background: 'rgba(248, 113, 113, 0.2)',
-                                    color: '#f87171',
+                                    color: '#ffffff',
                                   }}
                                 >
                                   YES
@@ -897,7 +897,7 @@ export default function MemoryCenter() {
                                   onClick={() => setDeleteConfirm(null)}
                                   className="px-2 py-0.5 rounded text-[9px] font-mono cursor-pointer"
                                   style={{
-                                    background: 'rgba(255, 255, 255, 0.05)',
+                                    background: '#0a0a0a',
                                     color: 'rgba(255, 255, 255, 0.4)',
                                   }}
                                 >
@@ -932,8 +932,8 @@ export default function MemoryCenter() {
                     className="relative rounded-xl p-4 group"
                     style={{
                       background: 'rgba(255, 255, 255, 0.02)',
-                      border: '1px solid rgba(255, 255, 255, 0.05)',
-                      backdropFilter: 'blur(8px)',
+                      border: '2px solid #333333',
+
                     }}
                   >
                     {/* Category badge + confidence */}
@@ -954,7 +954,7 @@ export default function MemoryCenter() {
                         <div
                           className="relative w-6 h-6 rounded-full flex items-center justify-center"
                           style={{
-                            background: 'rgba(255, 255, 255, 0.03)',
+                            background: '#0a0a0a',
                             border:
                               '1.5px solid ' + getConfidenceColor(memory.confidence),
                           }}
@@ -1000,7 +1000,7 @@ export default function MemoryCenter() {
                           <span
                             className="text-[9px] font-mono px-1.5 py-0.5 rounded"
                             style={{
-                              background: 'rgba(255, 255, 255, 0.03)',
+                              background: '#0a0a0a',
                               color: 'rgba(255, 255, 255, 0.2)',
                             }}
                           >
@@ -1065,7 +1065,7 @@ export default function MemoryCenter() {
                           className="absolute inset-0 rounded-xl flex flex-col items-center justify-center gap-3 z-10"
                           style={{
                             background: 'rgba(10, 11, 15, 0.95)',
-                            backdropFilter: 'blur(8px)',
+
                           }}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
@@ -1128,8 +1128,8 @@ export default function MemoryCenter() {
               className="relative w-full max-w-md rounded-xl p-6 z-10"
               style={{
                 background: '#0a0a0b',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                backdropFilter: 'blur(20px)',
+                border: '2px solid #333333',
+
                 boxShadow:
                   '0 8px 32px rgba(0, 0, 0, 0.6), 0 0 60px rgba(148, 163, 184, 0.05)',
               }}
@@ -1159,8 +1159,8 @@ export default function MemoryCenter() {
                     onChange={(e) => setFormCategory(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg text-sm outline-none cursor-pointer"
                     style={{
-                      background: 'rgba(255, 255, 255, 0.03)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      background: '#0a0a0a',
+                      border: '2px solid #333333',
                       color: 'rgba(255, 255, 255, 0.85)',
                     }}
                   >
@@ -1187,8 +1187,8 @@ export default function MemoryCenter() {
                     placeholder="e.g. favorite_language"
                     className="w-full px-3 py-2 rounded-lg text-sm outline-none"
                     style={{
-                      background: 'rgba(255, 255, 255, 0.03)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      background: '#0a0a0a',
+                      border: '2px solid #333333',
                       color: 'rgba(255, 255, 255, 0.85)',
                     }}
                   />
@@ -1209,8 +1209,8 @@ export default function MemoryCenter() {
                     rows={3}
                     className="w-full px-3 py-2 rounded-lg text-sm outline-none resize-none"
                     style={{
-                      background: 'rgba(255, 255, 255, 0.03)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      background: '#0a0a0a',
+                      border: '2px solid #333333',
                       color: 'rgba(255, 255, 255, 0.85)',
                     }}
                   />
@@ -1238,7 +1238,7 @@ export default function MemoryCenter() {
                     <div
                       className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
                       style={{
-                        background: 'rgba(255, 255, 255, 0.03)',
+                        background: '#0a0a0a',
                         border:
                           '1.5px solid ' + getConfidenceColor(formConfidence),
                       }}

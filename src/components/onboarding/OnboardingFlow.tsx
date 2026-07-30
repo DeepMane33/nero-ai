@@ -82,7 +82,7 @@ export default function OnboardingFlow({ onComplete }: { onComplete: () => void 
           style={{
             background: 'var(--glass-bg-strong)',
             border: '1px solid var(--glass-border)',
-            backdropFilter: 'blur(24px)',
+
           }}
         >
           {/* Icon */}

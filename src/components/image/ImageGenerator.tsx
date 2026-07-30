@@ -282,16 +282,16 @@ export default function ImageGenerator() {
       {/* Header */}
       <div
         className="flex items-center justify-between px-6 py-4 shrink-0 relative z-10"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: 'rgba(10,10,26,0.8)', backdropFilter: 'blur(12px)' }}
+        style={{ borderBottom: '2px solid #333333', background: 'rgba(10,10,26,0.8)', backdropFilter: 'blur(12px)' }}
       >
         <div className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full" style={{ background: isGenerating ? '#a855f7' : '#34d399', boxShadow: isGenerating ? '0 0 8px rgba(168,85,247,0.6)' : '0 0 8px rgba(52,211,153,0.6)', animation: isGenerating ? 'pulse 1s ease-in-out infinite' : undefined }} />
+          <div className="w-2 h-2 rounded-full" style={{ background: isGenerating ? '#a855f7' : '#c0c0c0', boxShadow: isGenerating ? '0 0 8px rgba(168,85,247,0.6)' : '0 0 8px rgba(52,211,153,0.6)', animation: isGenerating ? 'pulse 1s ease-in-out infinite' : undefined }} />
           <h2 className="text-sm font-medium tracking-wide" style={{ color: 'rgba(255,255,255,0.8)' }}>IMAGE FORGE</h2>
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono tracking-wider" style={{ background: 'rgba(168,85,247,0.08)', border: '1px solid rgba(168,85,247,0.15)', color: 'rgba(168,85,247,0.6)' }}>LOCAL</span>
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono tracking-wider" style={{ background: 'rgba(168,85,247,0.08)', border: '2px solid #333333', color: 'rgba(168,85,247,0.6)' }}>LOCAL</span>
         </div>
         <div className="flex items-center gap-4">
           {/* Tab toggle */}
-          <div className="flex items-center gap-1 p-0.5 rounded-lg" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="flex items-center gap-1 p-0.5 rounded-lg" style={{ background: 'rgba(255,255,255,0.03)', border: '2px solid #333333' }}>
             {(['generate', 'history'] as const).map((tab) => (
               <button
                 key={tab}
@@ -315,7 +315,7 @@ export default function ImageGenerator() {
         {activeTab === 'generate' ? (
           <div className="max-w-4xl mx-auto space-y-6">
             {/* Prompt area */}
-            <div className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(8px)' }}>
+            <div className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.02)', border: '2px solid #333333', backdropFilter: 'blur(8px)' }}>
               <label className="block text-[11px] font-mono uppercase tracking-[0.15em] mb-2" style={{ color: 'rgba(168,85,247,0.5)' }}>Describe your image</label>
               <textarea
                 value={prompt}
@@ -339,7 +339,7 @@ export default function ImageGenerator() {
                   placeholder="blurry, low quality, distorted, watermark..."
                   disabled={isGenerating}
                   className="w-full mt-2 px-3 py-2 rounded-lg text-xs bg-transparent outline-none disabled:opacity-50"
-                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.7)' }}
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '2px solid #333333', color: 'rgba(255,255,255,0.7)' }}
                 />
               </details>
 
@@ -353,7 +353,7 @@ export default function ImageGenerator() {
                     onChange={(e) => setModel(e.target.value as ImageModel)}
                     disabled={isGenerating}
                     className="w-full px-3 py-2 rounded-lg text-xs outline-none cursor-pointer disabled:opacity-50"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.8)' }}
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '2px solid #333333', color: 'rgba(255,255,255,0.8)' }}
                   >
                     {MODEL_OPTIONS.map((m) => <option key={m.id} value={m.id} style={{ background: '#0d1117' }}>{m.name}</option>)}
                   </select>
@@ -367,7 +367,7 @@ export default function ImageGenerator() {
                     onChange={(e) => setAspectRatio(e.target.value as AspectRatio)}
                     disabled={isGenerating}
                     className="w-full px-3 py-2 rounded-lg text-xs outline-none cursor-pointer disabled:opacity-50"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.8)' }}
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '2px solid #333333', color: 'rgba(255,255,255,0.8)' }}
                   >
                     {(Object.entries(ASPECT_RATIOS) as [AspectRatio, { label: string; w: number; h: number }][]).map(([key, val]) => (
                       <option key={key} value={key} style={{ background: '#0d1117' }}>{val.label} ({key})</option>
@@ -383,7 +383,7 @@ export default function ImageGenerator() {
                     onChange={(e) => setQuality(e.target.value as ImageQuality)}
                     disabled={isGenerating}
                     className="w-full px-3 py-2 rounded-lg text-xs outline-none cursor-pointer disabled:opacity-50"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.8)' }}
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '2px solid #333333', color: 'rgba(255,255,255,0.8)' }}
                   >
                     {(Object.entries(QUALITY_PRESETS) as [ImageQuality, { label: string; steps: number; desc: string }][]).map(([key, val]) => (
                       <option key={key} value={key} style={{ background: '#0d1117' }}>{val.label} ({val.steps} steps)</option>
@@ -399,7 +399,7 @@ export default function ImageGenerator() {
                     onChange={(e) => setStyleIdx(Number(e.target.value))}
                     disabled={isGenerating}
                     className="w-full px-3 py-2 rounded-lg text-xs outline-none cursor-pointer disabled:opacity-50"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.8)' }}
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '2px solid #333333', color: 'rgba(255,255,255,0.8)' }}
                   >
                     {STYLE_PRESETS.map((s, i) => <option key={i} value={i} style={{ background: '#0d1117' }}>{s.label}</option>)}
                   </select>
@@ -422,7 +422,7 @@ export default function ImageGenerator() {
               <AnimatePresence>
                 {isGenerating && (
                   <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 6, marginTop: 12 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="rounded-full overflow-hidden" style={{ background: 'rgba(168,85,247,0.08)' }}>
-                    <motion.div className="h-full rounded-full" style={{ background: 'linear-gradient(90deg, #a855f7, #38bdf8, #a855f7)', backgroundSize: '200% 100%', animation: 'gradient-shift 2s linear infinite' }} animate={{ width: `${progress}%` }} transition={{ duration: 0.4, ease: 'easeOut' }} />
+                    <motion.div className="h-full rounded-full" style={{ background: '#000000', backgroundSize: '200% 100%', animation: 'gradient-shift 2s linear infinite' }} animate={{ width: `${progress}%` }} transition={{ duration: 0.4, ease: 'easeOut' }} />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -430,7 +430,7 @@ export default function ImageGenerator() {
               {/* Error */}
               <AnimatePresence>
                 {error && (
-                  <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="mt-3 px-4 py-3 rounded-lg text-sm flex items-center gap-2" style={{ background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.25)', color: '#f87171' }}>
+                  <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="mt-3 px-4 py-3 rounded-lg text-sm flex items-center gap-2" style={{ background: 'rgba(248,113,113,0.1)', border: '2px solid #333333', color: '#ffffff' }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
                     {error}
                   </motion.div>
@@ -478,7 +478,7 @@ export default function ImageGenerator() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search image history..."
                   className="w-full px-4 py-2.5 pl-10 rounded-lg text-sm bg-transparent outline-none"
-                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)' }}
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '2px solid #333333', color: 'rgba(255,255,255,0.8)' }}
                 />
                 <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -514,17 +514,17 @@ export default function ImageGenerator() {
           >
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }} className="relative max-w-4xl max-h-full" onClick={(e) => e.stopPropagation()}>
               <img src={fullscreenImage.url} alt={fullscreenImage.prompt} className="max-w-full max-h-[80vh] rounded-xl" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 rounded-b-xl" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.8))' }}>
+              <div className="absolute bottom-0 left-0 right-0 p-4 rounded-b-xl" style={{ background: '#000000' }}>
                 <p className="text-sm mb-2" style={{ color: 'rgba(255,255,255,0.9)' }}>{fullscreenImage.prompt}</p>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(168,85,247,0.15)', color: 'rgba(168,85,247,0.7)' }}>{fullscreenImage.model}</span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(56,189,248,0.12)', color: 'rgba(56,189,248,0.6)' }}>{fullscreenImage.width}×{fullscreenImage.height}</span>
                   <div className="flex-1" />
-                  <button onClick={() => handleDownload(fullscreenImage)} className="px-3 py-1.5 rounded-lg text-xs" style={{ background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.3)', color: '#38bdf8', cursor: 'pointer' }}>Download</button>
-                  <button onClick={() => { setFullscreenImage(null); handleRegenerate(fullscreenImage) }} className="px-3 py-1.5 rounded-lg text-xs" style={{ background: 'rgba(168,85,247,0.15)', border: '1px solid rgba(168,85,247,0.3)', color: '#a855f7', cursor: 'pointer' }}>Regenerate</button>
+                  <button onClick={() => handleDownload(fullscreenImage)} className="px-3 py-1.5 rounded-lg text-xs" style={{ background: 'rgba(56,189,248,0.15)', border: '2px solid #333333', color: '#38bdf8', cursor: 'pointer' }}>Download</button>
+                  <button onClick={() => { setFullscreenImage(null); handleRegenerate(fullscreenImage) }} className="px-3 py-1.5 rounded-lg text-xs" style={{ background: 'rgba(168,85,247,0.15)', border: '2px solid #333333', color: '#a855f7', cursor: 'pointer' }}>Regenerate</button>
                 </div>
               </div>
-              <button onClick={() => setFullscreenImage(null)} className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', cursor: 'pointer' }}>✕</button>
+              <button onClick={() => setFullscreenImage(null)} className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.6)', border: '2px solid #333333', color: 'rgba(255,255,255,0.7)', cursor: 'pointer' }}>✕</button>
             </motion.div>
           </motion.div>
         )}
@@ -558,12 +558,12 @@ function ImageGrid({
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.35, delay: i * 0.04 }}
             className="group relative rounded-xl overflow-hidden cursor-pointer"
-            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+            style={{ background: 'rgba(255,255,255,0.02)', border: '2px solid #333333' }}
             onClick={() => onSelect(img)}
           >
             <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" style={{ boxShadow: '0 0 20px rgba(168,85,247,0.15), inset 0 0 20px rgba(168,85,247,0.05)' }} />
             <img src={img.url} alt={img.prompt} className="w-full aspect-square object-cover" loading="lazy" />
-            <div className="absolute inset-0 flex flex-col justify-end p-3 opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: 'linear-gradient(transparent 30%, rgba(0,0,0,0.8) 100%)' }}>
+            <div className="absolute inset-0 flex flex-col justify-end p-3 opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: '#000000' }}>
               <p className="text-[11px] line-clamp-2 mb-2" style={{ color: 'rgba(255,255,255,0.85)' }}>{img.prompt}</p>
               <div className="flex items-center gap-2">
                 <span className="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded" style={{ background: 'rgba(168,85,247,0.12)', color: 'rgba(168,85,247,0.7)' }}>{img.model}</span>

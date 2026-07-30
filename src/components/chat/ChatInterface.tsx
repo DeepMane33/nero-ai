@@ -788,7 +788,7 @@ export default function ChatInterface({ activeConversationId, onConversationCrea
               {activeBrain && (
                 <span className="px-3 py-1.5 rounded-lg text-[11px] font-medium" style={{
                   background: 'var(--accent-subtle)',
-                  border: '1px solid rgba(0,217,255,0.1)',
+                  border: '2px solid #333333',
                   color: 'var(--text-tertiary)',
                 }}>
                   {activeBrain}
@@ -836,8 +836,8 @@ export default function ChatInterface({ activeConversationId, onConversationCrea
       <div className="shrink-0 px-6 py-4 relative z-10" style={{
         borderTop: '1px solid var(--glass-border)',
         background: 'rgba(14, 14, 20, 0.5)',
-        backdropFilter: 'blur(24px)',
-        WebkitBackdropFilter: 'blur(24px)',
+
+
       }}>
         <div className="max-w-3xl mx-auto">
           {/* Command autocomplete */}
@@ -999,7 +999,7 @@ export default function ChatInterface({ activeConversationId, onConversationCrea
                 background: toast.type === 'error' ? 'rgba(248,113,113,0.08)' : toast.type === 'success' ? 'rgba(52,211,153,0.08)' : 'rgba(0,217,255,0.08)',
                 border: `1px solid ${toast.type === 'error' ? 'rgba(248,113,113,0.15)' : toast.type === 'success' ? 'rgba(52,211,153,0.15)' : 'rgba(0,217,255,0.15)'}`,
                 color: toast.type === 'error' ? 'var(--color-error)' : toast.type === 'success' ? 'var(--color-success)' : 'var(--accent)',
-                backdropFilter: 'blur(16px)',
+
                 boxShadow: 'var(--shadow-lg)',
               }}
             >

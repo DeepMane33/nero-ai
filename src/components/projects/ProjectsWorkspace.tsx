@@ -29,20 +29,20 @@ import { addActivity } from '@/lib/client-activity';
 type ActiveTab = 'files' | 'notes' | 'tasks';
 
 const PRESET_COLORS = [
-  '#b0b8c4', '#a0b8d0', '#8fb996', '#7ec8e3', '#c8b86a',
-  '#7b8da4', '#d4736e', '#14b8a6', '#6b8ca8', '#b4a0d4',
+  '#b0b8c4', '#a0b8d0', '#8fb996', '#808080', '#c8b86a',
+  '#7b8da4', '#ffffff', '#14b8a6', '#6b8ca8', '#b4a0d4',
 ];
 
 const PRIORITY_CONFIG = {
-  high: { bg: 'rgba(212, 115, 110, 0.12)', border: 'rgba(212, 115, 110, 0.25)', color: '#d4736e', label: 'HIGH' },
-  medium: { bg: 'rgba(148, 163, 184, 0.08)', border: 'rgba(148, 163, 184, 0.2)', color: '#94a3b8', label: 'MED' },
+  high: { bg: 'rgba(212, 115, 110, 0.12)', border: 'rgba(212, 115, 110, 0.25)', color: '#ffffff', label: 'HIGH' },
+  medium: { bg: '#111111', border: '#222222', color: '#808080', label: 'MED' },
   low: { bg: 'rgba(200, 205, 215, 0.03)', border: 'rgba(200, 205, 215, 0.08)', color: 'rgba(138, 143, 152, 0.4)', label: 'LOW' },
 };
 
 const STATUS_CONFIG = {
   todo: { color: 'rgba(138, 143, 152, 0.4)', glow: 'none', label: 'To Do' },
-  in_progress: { color: '#94a3b8', glow: '0 0 10px rgba(148, 163, 184, 0.3)', label: 'In Progress' },
-  done: { color: '#7eddd6', glow: '0 0 10px rgba(126, 221, 214, 0.3)', label: 'Done' },
+  in_progress: { color: '#808080', glow: '0 0 10px rgba(148, 163, 184, 0.3)', label: 'In Progress' },
+  done: { color: '#c0c0c0', glow: '0 0 10px rgba(126, 221, 214, 0.3)', label: 'Done' },
 };
 
 // ─── Animation Variants ────────────────────────────────
@@ -75,16 +75,16 @@ function Toast({ message, type, onClose }: { message: string; type: 'success' | 
     <motion.div
       style={{
         position: 'fixed', bottom: 24, right: 24, zIndex: 200,
-        padding: '12px 20px', borderRadius: 10, fontSize: 13, fontWeight: 500,
+        padding: '12px 20px', borderRadius: 0, fontSize: 13, fontWeight: 500,
         background: type === 'error'
-          ? 'linear-gradient(135deg, rgba(248, 113, 113, 0.95), rgba(248, 113, 113, 0.8))'
-          : 'linear-gradient(135deg, rgba(52, 211, 153, 0.95), rgba(176, 184, 196, 0.85))',
-        color: type === 'error' ? '#fff' : '#0a0a1a',
+          ? '#ffffff'
+          : '#000000',
+        color: type === 'error' ? '#fff' : '#000000',
         boxShadow: type === 'error'
           ? '0 4px 24px rgba(248, 113, 113, 0.4)'
           : '0 4px 24px rgba(52, 211, 153, 0.3)',
         display: 'flex', alignItems: 'center', gap: 8,
-        backdropFilter: 'blur(12px)',
+
       }}
       initial={{ opacity: 0, y: 20, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -106,16 +106,16 @@ function ConfirmDialog({
       style={{
         position: 'fixed', inset: 0, zIndex: 150,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'rgba(0, 0, 0, 0.65)', backdropFilter: 'blur(6px)',
+        background: '#000000', backdropFilter: 'blur(6px)',
       }}
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       onClick={onCancel}
     >
       <motion.div
         style={{
-          width: 360, padding: 24, borderRadius: 14,
+          width: 360, padding: 24, borderRadius: 0,
           background: 'rgba(13, 14, 19, 0.97)', backdropFilter: 'blur(24px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          border: '2px solid #333333',
           boxShadow: '0 8px 48px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1)',
         }}
         initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
@@ -130,8 +130,8 @@ function ConfirmDialog({
         <div style={{ display: 'flex', gap: 10 }}>
           <button
             style={{
-              flex: 1, padding: '10px 0', borderRadius: 8, fontSize: 13, fontWeight: 600,
-              background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.08)',
+              flex: 1, padding: '10px 0', borderRadius: 0, fontSize: 13, fontWeight: 600,
+              background: '#0a0a0a', border: '2px solid #333333',
               color: 'rgba(255, 255, 255, 0.7)', cursor: 'pointer',
             }}
             onClick={onCancel}
@@ -140,10 +140,10 @@ function ConfirmDialog({
           </button>
           <button
             style={{
-              flex: 1, padding: '10px 0', borderRadius: 8, fontSize: 13, fontWeight: 600,
+              flex: 1, padding: '10px 0', borderRadius: 0, fontSize: 13, fontWeight: 600,
               background: danger ? 'rgba(248, 113, 113, 0.2)' : 'rgba(176, 184, 196, 0.15)',
               border: danger ? '1px solid rgba(248, 113, 113, 0.4)' : '1px solid rgba(176, 184, 196, 0.3)',
-              color: danger ? '#f87171' : '#b0b8c4', cursor: 'pointer',
+              color: danger ? '#ffffff' : '#b0b8c4', cursor: 'pointer',
             }}
             onClick={onConfirm}
           >
@@ -174,8 +174,8 @@ function ModalShell({
         style={{
           width, maxHeight: '85vh', overflowY: 'auto',
           background: 'rgba(13, 14, 19, 0.97)', backdropFilter: 'blur(24px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: 16, padding: 28,
+          border: '2px solid #333333',
+          borderRadius: 0, padding: 28,
           boxShadow: '0 12px 48px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1)',
         }}
         initial={{ scale: 0.92, y: 24 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.92, y: 24 }}
@@ -192,7 +192,7 @@ function StatBadge({ icon, label, value, color }: { icon: string; label: string;
   return (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 8,
-      padding: '6px 12px', borderRadius: 8,
+      padding: '6px 12px', borderRadius: 0,
       background: color.replace(')', ', 0.08)').replace('rgb', 'rgba').replace('#', ''),
       border: '1px solid ' + color.replace(')', ', 0.15)').replace('rgb', 'rgba').replace('#', ''),
       /* Fallback: use inline approach */
@@ -211,12 +211,12 @@ function Skeleton({ count = 5 }: { count?: number }) {
     <>
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} style={{
-          height: 42, borderRadius: 8, marginBottom: 6,
-          background: 'rgba(255, 255, 255, 0.03)', position: 'relative', overflow: 'hidden',
+          height: 42, borderRadius: 0, marginBottom: 6,
+          background: '#0a0a0a', position: 'relative', overflow: 'hidden',
         }}>
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)',
+            background: '#000000',
             animation: 'shimmer 1.5s infinite',
           }} />
         </div>
@@ -254,9 +254,9 @@ function EmptyState({
       {action && (
         <motion.button
           style={{
-            marginTop: 8, padding: '10px 24px', borderRadius: 10, fontSize: 12, fontWeight: 600,
-            background: 'linear-gradient(135deg, rgba(176, 184, 196, 0.15), rgba(176, 184, 196, 0.08))',
-            border: '1px solid rgba(176, 184, 196, 0.3)',
+            marginTop: 8, padding: '10px 24px', borderRadius: 0, fontSize: 12, fontWeight: 600,
+            background: '#000000',
+            border: '2px solid #333333',
             color: '#b0b8c4', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6,
             boxShadow: '0 0 16px rgba(176, 184, 196, 0.1)',
           }}
@@ -663,18 +663,18 @@ export default function ProjectsWorkspace() {
   // ─── Styles ─────────────────────────────────────────
 
   const glassCard: React.CSSProperties = {
-    background: 'rgba(13, 14, 19, 0.7)',
+    background: '#050505',
     backdropFilter: 'blur(16px) saturate(180%)',
     WebkitBackdropFilter: 'blur(16px) saturate(180%)',
-    border: '1px solid rgba(255, 255, 255, 0.06)',
-    borderRadius: 12,
+    border: '2px solid #333333',
+    borderRadius: 0,
   };
 
   const inputStyle: React.CSSProperties = {
     width: '100%',
-    background: 'rgba(255, 255, 255, 0.04)',
-    border: '1px solid rgba(255, 255, 255, 0.08)',
-    borderRadius: 8,
+    background: '#0a0a0a',
+    border: '2px solid #333333',
+    borderRadius: 0,
     padding: '10px 14px',
     color: 'rgba(255, 255, 255, 0.9)',
     fontSize: 13,
@@ -690,22 +690,22 @@ export default function ProjectsWorkspace() {
   };
 
   const btnBase: React.CSSProperties = {
-    padding: '8px 16px', borderRadius: 8, fontSize: 12, fontWeight: 600,
+    padding: '8px 16px', borderRadius: 0, fontSize: 12, fontWeight: 600,
     cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 6,
     transition: 'all 0.2s', border: 'none', fontFamily: 'inherit',
   };
 
   const btnGhost: React.CSSProperties = {
     ...btnBase,
-    background: 'rgba(255, 255, 255, 0.04)',
-    border: '1px solid rgba(255, 255, 255, 0.08)',
+    background: '#0a0a0a',
+    border: '2px solid #333333',
     color: 'rgba(255, 255, 255, 0.7)',
   };
 
   const btnPrimary: React.CSSProperties = {
     ...btnBase,
-    background: 'linear-gradient(135deg, rgba(176, 184, 196, 0.15), rgba(176, 184, 196, 0.08))',
-    border: '1px solid rgba(176, 184, 196, 0.3)',
+    background: '#000000',
+    border: '2px solid #333333',
     color: '#b0b8c4',
     boxShadow: '0 0 12px rgba(176, 184, 196, 0.1)',
   };
@@ -713,8 +713,8 @@ export default function ProjectsWorkspace() {
   const btnDanger: React.CSSProperties = {
     ...btnBase,
     background: 'rgba(248, 113, 113, 0.1)',
-    border: '1px solid rgba(248, 113, 113, 0.25)',
-    color: '#f87171',
+    border: '2px solid #333333',
+    color: '#ffffff',
   };
 
   // ─── Render: Project Sidebar ────────────────────────
@@ -726,7 +726,7 @@ export default function ProjectsWorkspace() {
     }}>
       {/* Header */}
       <div style={{
-        padding: '16px 16px 12px', borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+        padding: '16px 16px 12px', borderBottom: '2px solid #333333',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -734,15 +734,15 @@ export default function ProjectsWorkspace() {
             letterSpacing: '0.5px',
           }}>Projects</span>
           <span style={{
-            fontSize: 10, padding: '2px 7px', borderRadius: 10,
+            fontSize: 10, padding: '2px 7px', borderRadius: 0,
             background: 'rgba(176, 184, 196, 0.1)', color: '#b0b8c4',
             fontWeight: 600,
           }}>{projects.length}</span>
         </div>
         <motion.button
           style={{
-            width: 28, height: 28, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'rgba(176, 184, 196, 0.08)', border: '1px solid rgba(176, 184, 196, 0.12)',
+            width: 28, height: 28, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'rgba(176, 184, 196, 0.08)', border: '2px solid #333333',
             color: '#b0b8c4', cursor: 'pointer', fontSize: 16,
           }}
           whileHover={{ scale: 1.05, background: 'rgba(176, 184, 196, 0.12)' }}
@@ -762,7 +762,7 @@ export default function ProjectsWorkspace() {
           }}>{'\u{1F50D}'}</span>
           <input
             style={{
-              width: '100%', background: 'transparent', border: 'none', borderRadius: 8,
+              width: '100%', background: 'transparent', border: 'none', borderRadius: 0,
               padding: '8px 12px 8px 32px', fontSize: 12,
               color: 'rgba(255, 255, 255, 0.85)', outline: 'none', fontFamily: 'inherit',
             }}
@@ -794,7 +794,7 @@ export default function ProjectsWorkspace() {
                 className={isActive ? 'neu-flat' : ''}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 10,
-                  padding: '10px 12px', borderRadius: 10, cursor: 'pointer',
+                  padding: '10px 12px', borderRadius: 0, cursor: 'pointer',
                   background: isActive ? undefined : 'transparent',
                   border: isActive ? 'none' : '1px solid transparent',
                   marginBottom: 2, position: 'relative' as const,
@@ -804,7 +804,7 @@ export default function ProjectsWorkspace() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.03, duration: 0.2 }}
                 whileHover={{
-                  background: isActive ? color + '18' : 'rgba(255, 255, 255, 0.03)',
+                  background: isActive ? color + '18' : '#0a0a0a',
                 }}
                 onClick={() => setActiveProject(p)}
               >
@@ -849,7 +849,7 @@ export default function ProjectsWorkspace() {
         {showSettings && activeProject && (
           <motion.div
             style={{
-              padding: '14px', borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+              padding: '14px', borderTop: '2px solid #333333',
               background: 'rgba(0, 0, 0, 0.2)',
             }}
             initial={{ height: 0, opacity: 0 }}
@@ -884,7 +884,7 @@ export default function ProjectsWorkspace() {
                   <motion.div
                     key={c}
                     style={{
-                      width: 30, height: 30, borderRadius: 8, background: c, cursor: 'pointer',
+                      width: 30, height: 30, borderRadius: 0, background: c, cursor: 'pointer',
                       border: activeProject.color === c ? '2px solid rgba(255, 255, 255, 0.8)' : '2px solid transparent',
                       boxShadow: activeProject.color === c ? '0 0 12px ' + c + '66' : 'none',
                       transition: 'border-color 0.2s, box-shadow 0.2s',
@@ -918,9 +918,9 @@ export default function ProjectsWorkspace() {
     const color = activeProject.color || '#b0b8c4';
     return (
       <div style={{
-        padding: '14px 20px', borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+        padding: '14px 20px', borderBottom: '2px solid #333333',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: 'rgba(13, 14, 19, 0.4)',
+        background: '#050505',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1, minWidth: 0 }}>
           <div style={{
@@ -969,27 +969,27 @@ export default function ProjectsWorkspace() {
           <div style={{ display: 'flex', gap: 10, flexShrink: 0, marginLeft: 16 }}>
             <div style={{
               display: 'flex', alignItems: 'center', gap: 5,
-              padding: '4px 10px', borderRadius: 6,
-              background: 'rgba(176, 184, 196, 0.06)', border: '1px solid rgba(176, 184, 196, 0.12)',
+              padding: '4px 10px', borderRadius: 0,
+              background: 'rgba(176, 184, 196, 0.06)', border: '2px solid #333333',
             }}>
               <span style={{ fontSize: 11 }}>{'\u{1F4C4}'}</span>
               <span style={{ fontSize: 11, fontWeight: 600, color: '#b0b8c4' }}>{files.length}</span>
             </div>
             <div style={{
               display: 'flex', alignItems: 'center', gap: 5,
-              padding: '4px 10px', borderRadius: 6,
-              background: 'rgba(168, 85, 247, 0.06)', border: '1px solid rgba(168, 85, 247, 0.12)',
+              padding: '4px 10px', borderRadius: 0,
+              background: 'rgba(168, 85, 247, 0.06)', border: '2px solid #333333',
             }}>
               <span style={{ fontSize: 11 }}>{'\u{1F4DD}'}</span>
               <span style={{ fontSize: 11, fontWeight: 600, color: '#a855f7' }}>{notes.length}</span>
             </div>
             <div style={{
               display: 'flex', alignItems: 'center', gap: 5,
-              padding: '4px 10px', borderRadius: 6,
-              background: 'rgba(52, 211, 153, 0.06)', border: '1px solid rgba(52, 211, 153, 0.12)',
+              padding: '4px 10px', borderRadius: 0,
+              background: 'rgba(52, 211, 153, 0.06)', border: '2px solid #333333',
             }}>
               <span style={{ fontSize: 11 }}>{'\u2705'}</span>
-              <span style={{ fontSize: 11, fontWeight: 600, color: '#34d399' }}>{taskStats.done}/{taskStats.total}</span>
+              <span style={{ fontSize: 11, fontWeight: 600, color: '#c0c0c0' }}>{taskStats.done}/{taskStats.total}</span>
             </div>
           </div>
         )}
@@ -1002,7 +1002,7 @@ export default function ProjectsWorkspace() {
   const renderTabBar = () => (
     <div style={{
       display: 'flex', alignItems: 'center',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+      borderBottom: '2px solid #333333',
       padding: '0 16px', background: 'rgba(13, 14, 19, 0.3)',
     }}>
       {([
@@ -1060,7 +1060,7 @@ export default function ProjectsWorkspace() {
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         {/* File list */}
         <div style={{
-          width: 230, minWidth: 230, borderRight: '1px solid rgba(255, 255, 255, 0.06)',
+          width: 230, minWidth: 230, borderRight: '2px solid #333333',
           overflowY: 'auto', padding: 8,
         }}>
           <div style={{
@@ -1080,7 +1080,7 @@ export default function ProjectsWorkspace() {
                 key={f.id}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 8,
-                  padding: '8px 10px', borderRadius: 8, cursor: 'pointer',
+                  padding: '8px 10px', borderRadius: 0, cursor: 'pointer',
                   fontSize: 12, color: isActive ? '#b0b8c4' : 'rgba(255, 255, 255, 0.65)',
                   background: isActive ? 'rgba(176, 184, 196, 0.08)' : 'transparent',
                   border: isActive ? '1px solid rgba(176, 184, 196, 0.15)' : '1px solid transparent',
@@ -1089,7 +1089,7 @@ export default function ProjectsWorkspace() {
                 initial={{ opacity: 0, x: -6 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.02 }}
-                whileHover={{ background: isActive ? 'rgba(176, 184, 196, 0.1)' : 'rgba(255, 255, 255, 0.03)' }}
+                whileHover={{ background: isActive ? 'rgba(176, 184, 196, 0.1)' : '#0a0a0a' }}
                 onClick={() => handleSelectFile(f)}
               >
                 <span style={{ fontSize: 12 }}>{f.is_directory ? '\u{1F4C1}' : '\u{1F4C4}'}</span>
@@ -1101,9 +1101,9 @@ export default function ProjectsWorkspace() {
                   style={{
                     background: 'none', border: 'none',
                     color: 'rgba(255, 255, 255, 0.15)', cursor: 'pointer', fontSize: 10, padding: '2px 4px',
-                    borderRadius: 4, lineHeight: 1,
+                    borderRadius: 0, lineHeight: 1,
                   }}
-                  whileHover={{ color: '#f87171', background: 'rgba(248, 113, 113, 0.1)' }}
+                  whileHover={{ color: '#ffffff', background: 'rgba(248, 113, 113, 0.1)' }}
                   onClick={(e) => { e.stopPropagation(); handleDeleteFile(f.id, f.name); }}
                   title="Delete file"
                 >
@@ -1120,7 +1120,7 @@ export default function ProjectsWorkspace() {
             <>
               <div style={{
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '10px 16px', borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+                padding: '10px 16px', borderBottom: '2px solid #333333',
                 background: 'rgba(13, 14, 19, 0.3)',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -1130,7 +1130,7 @@ export default function ProjectsWorkspace() {
                   </span>
                   {fileModified && (
                     <span style={{
-                      fontSize: 9, padding: '2px 6px', borderRadius: 4,
+                      fontSize: 9, padding: '2px 6px', borderRadius: 0,
                       background: 'rgba(234, 179, 8, 0.12)', color: '#eab308', fontWeight: 600,
                     }}>MODIFIED</span>
                   )}
@@ -1181,7 +1181,7 @@ export default function ProjectsWorkspace() {
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         {/* Note list */}
         <div style={{
-          width: 240, minWidth: 240, borderRight: '1px solid rgba(255, 255, 255, 0.06)',
+          width: 240, minWidth: 240, borderRight: '2px solid #333333',
           overflowY: 'auto', padding: 8,
         }}>
           <div style={{
@@ -1200,7 +1200,7 @@ export default function ProjectsWorkspace() {
               <motion.div
                 key={n.id}
                 style={{
-                  padding: '10px 12px', borderRadius: 10, cursor: 'pointer',
+                  padding: '10px 12px', borderRadius: 0, cursor: 'pointer',
                   background: isActive ? 'rgba(168, 85, 247, 0.08)' : 'transparent',
                   border: isActive ? '1px solid rgba(168, 85, 247, 0.2)' : '1px solid transparent',
                   marginBottom: 4, position: 'relative' as const, transition: 'all 0.15s',
@@ -1208,7 +1208,7 @@ export default function ProjectsWorkspace() {
                 initial={{ opacity: 0, x: -6 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.02 }}
-                whileHover={{ background: isActive ? 'rgba(168, 85, 247, 0.12)' : 'rgba(255, 255, 255, 0.03)' }}
+                whileHover={{ background: isActive ? 'rgba(168, 85, 247, 0.12)' : '#0a0a0a' }}
                 onClick={() => handleSelectNote(n)}
               >
                 <div style={{
@@ -1228,9 +1228,9 @@ export default function ProjectsWorkspace() {
                   style={{
                     position: 'absolute' as const, top: 10, right: 8,
                     background: 'none', border: 'none', color: 'rgba(255, 255, 255, 0.15)',
-                    cursor: 'pointer', fontSize: 10, padding: '2px 4px', borderRadius: 4,
+                    cursor: 'pointer', fontSize: 10, padding: '2px 4px', borderRadius: 0,
                   }}
-                  whileHover={{ color: '#f87171', background: 'rgba(248, 113, 113, 0.1)' }}
+                  whileHover={{ color: '#ffffff', background: 'rgba(248, 113, 113, 0.1)' }}
                   onClick={(e) => { e.stopPropagation(); handleDeleteNote(n.id, n.title); }}
                   title="Delete note"
                 >
@@ -1247,7 +1247,7 @@ export default function ProjectsWorkspace() {
             <>
               <div style={{
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '10px 16px', borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+                padding: '10px 16px', borderBottom: '2px solid #333333',
                 background: 'rgba(13, 14, 19, 0.3)',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, minWidth: 0 }}>
@@ -1264,7 +1264,7 @@ export default function ProjectsWorkspace() {
                   />
                   {noteModified && (
                     <span style={{
-                      fontSize: 9, padding: '2px 6px', borderRadius: 4,
+                      fontSize: 9, padding: '2px 6px', borderRadius: 0,
                       background: 'rgba(234, 179, 8, 0.12)', color: '#eab308', fontWeight: 600,
                       flexShrink: 0,
                     }}>MODIFIED</span>
@@ -1325,20 +1325,20 @@ export default function ProjectsWorkspace() {
         {/* Task stats bar */}
         <div style={{
           display: 'flex', alignItems: 'center', gap: 16, padding: '10px 20px',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+          borderBottom: '2px solid #333333',
           background: 'rgba(13, 14, 19, 0.2)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <div style={{ width: 8, height: 8, borderRadius: 3, background: 'rgba(255, 255, 255, 0.4)' }} />
+            <div style={{ width: 8, height: 8, borderRadius: 0, background: 'rgba(255, 255, 255, 0.4)' }} />
             <span style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.45)' }}>To Do: <strong style={{ color: 'rgba(255, 255, 255, 0.7)' }}>{taskStats.todo}</strong></span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <div style={{ width: 8, height: 8, borderRadius: 3, background: '#b0b8c4' }} />
+            <div style={{ width: 8, height: 8, borderRadius: 0, background: '#b0b8c4' }} />
             <span style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.45)' }}>In Progress: <strong style={{ color: '#b0b8c4' }}>{taskStats.inProgress}</strong></span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <div style={{ width: 8, height: 8, borderRadius: 3, background: '#34d399' }} />
-            <span style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.45)' }}>Done: <strong style={{ color: '#34d399' }}>{taskStats.done}</strong></span>
+            <div style={{ width: 8, height: 8, borderRadius: 0, background: '#c0c0c0' }} />
+            <span style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.45)' }}>Done: <strong style={{ color: '#c0c0c0' }}>{taskStats.done}</strong></span>
           </div>
           <div style={{ marginLeft: 'auto', fontSize: 11, color: 'rgba(255, 255, 255, 0.3)' }}>
             {taskStats.total} task{taskStats.total !== 1 ? 's' : ''} total
@@ -1355,7 +1355,7 @@ export default function ProjectsWorkspace() {
               <div
                 key={col.status}
                 style={{
-                  flex: 1, minWidth: 220, borderRadius: 12,
+                  flex: 1, minWidth: 220, borderRadius: 0,
                   background: isDragOver ? 'rgba(176, 184, 196, 0.04)' : 'rgba(255, 255, 255, 0.02)',
                   border: isDragOver ? '1px dashed rgba(176, 184, 196, 0.3)' : '1px solid rgba(255, 255, 255, 0.04)',
                   display: 'flex', flexDirection: 'column' as const, overflow: 'hidden',
@@ -1368,7 +1368,7 @@ export default function ProjectsWorkspace() {
                 {/* Column header */}
                 <div style={{
                   padding: '12px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+                  borderBottom: '2px solid #333333',
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <span style={{ fontSize: 13 }}>{col.icon}</span>
@@ -1379,8 +1379,8 @@ export default function ProjectsWorkspace() {
                     }}>{col.label}</span>
                   </div>
                   <span style={{
-                    fontSize: 10, padding: '2px 8px', borderRadius: 6,
-                    background: 'rgba(255, 255, 255, 0.04)',
+                    fontSize: 10, padding: '2px 8px', borderRadius: 0,
+                    background: '#0a0a0a',
                     color: 'rgba(255, 255, 255, 0.35)', fontWeight: 600,
                   }}>{colTasks.length}</span>
                 </div>
@@ -1401,8 +1401,8 @@ export default function ProjectsWorkspace() {
                         key={task.id}
                         style={{
                           background: 'rgba(13, 14, 19, 0.8)',
-                          border: '1px solid rgba(255, 255, 255, 0.06)',
-                          borderRadius: 10, padding: '12px 14px', marginBottom: 6,
+                          border: '2px solid #333333',
+                          borderRadius: 0, padding: '12px 14px', marginBottom: 6,
                           cursor: 'grab', position: 'relative' as const,
                           opacity: dragTask === task.id ? 0.4 : 1,
                           transition: 'opacity 0.2s',
@@ -1415,7 +1415,7 @@ export default function ProjectsWorkspace() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.03, duration: 0.2 }}
                         whileHover={{
-                          borderColor: 'rgba(255, 255, 255, 0.12)',
+                          borderColor: '#1a1a1a',
                           background: 'rgba(13, 14, 19, 0.95)',
                         }}
                       >
@@ -1428,9 +1428,9 @@ export default function ProjectsWorkspace() {
                             style={{
                               background: 'none', border: 'none',
                               color: 'rgba(255, 255, 255, 0.15)', cursor: 'pointer',
-                              fontSize: 10, padding: '2px 4px', borderRadius: 4, flexShrink: 0,
+                              fontSize: 10, padding: '2px 4px', borderRadius: 0, flexShrink: 0,
                             }}
-                            whileHover={{ color: '#f87171', background: 'rgba(248, 113, 113, 0.1)' }}
+                            whileHover={{ color: '#ffffff', background: 'rgba(248, 113, 113, 0.1)' }}
                             onClick={() => handleDeleteTask(task.id)}
                           >
                             {'\u2715'}
@@ -1446,7 +1446,7 @@ export default function ProjectsWorkspace() {
                         )}
                         <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                           <span style={{
-                            fontSize: 9, fontWeight: 700, padding: '2px 7px', borderRadius: 4,
+                            fontSize: 9, fontWeight: 700, padding: '2px 7px', borderRadius: 0,
                             background: priority.bg, border: '1px solid ' + priority.border,
                             color: priority.color, letterSpacing: '0.5px',
                           }}>{priority.label}</span>
@@ -1455,19 +1455,19 @@ export default function ProjectsWorkspace() {
                         {/* Status action buttons */}
                         <div style={{
                           display: 'flex', gap: 4, marginTop: 8, paddingTop: 8,
-                          borderTop: '1px solid rgba(255, 255, 255, 0.04)',
+                          borderTop: '2px solid #333333',
                         }}>
                           {columns.filter((c) => c.status !== task.status).map((c) => (
                             <motion.button
                               key={c.status}
                               style={{
-                                flex: 1, padding: '4px 0', borderRadius: 6, fontSize: 9, fontWeight: 600,
-                                background: 'rgba(255, 255, 255, 0.03)',
-                                border: '1px solid rgba(255, 255, 255, 0.06)',
+                                flex: 1, padding: '4px 0', borderRadius: 0, fontSize: 9, fontWeight: 600,
+                                background: '#0a0a0a',
+                                border: '2px solid #333333',
                                 color: STATUS_CONFIG[c.status as keyof typeof STATUS_CONFIG].color,
                                 cursor: 'pointer', fontFamily: 'inherit',
                               }}
-                              whileHover={{ background: 'rgba(255, 255, 255, 0.06)' }}
+                              whileHover={{ background: '#0a0a0a' }}
                               onClick={() => handleUpdateTaskStatus(task.id, c.status)}
                             >
                               {c.label}
@@ -1569,7 +1569,7 @@ export default function ProjectsWorkspace() {
                 <motion.div
                   key={c}
                   style={{
-                    width: 34, height: 34, borderRadius: 8, background: c, cursor: 'pointer',
+                    width: 34, height: 34, borderRadius: 0, background: c, cursor: 'pointer',
                     border: newProject.color === c ? '2px solid rgba(255, 255, 255, 0.85)' : '2px solid transparent',
                     boxShadow: newProject.color === c ? '0 0 14px ' + c + '66' : 'none',
                     transition: 'border-color 0.2s, box-shadow 0.2s',
@@ -1673,7 +1673,7 @@ export default function ProjectsWorkspace() {
                     key={p}
                     style={{
                       ...btnBase, flex: 1, justifyContent: 'center', padding: '9px 0',
-                      background: isSelected ? conf.bg : 'rgba(255, 255, 255, 0.03)',
+                      background: isSelected ? conf.bg : '#0a0a0a',
                       border: isSelected ? '1px solid ' + conf.border : '1px solid rgba(255, 255, 255, 0.06)',
                       color: isSelected ? conf.color : 'rgba(255, 255, 255, 0.45)',
                       fontSize: 12,

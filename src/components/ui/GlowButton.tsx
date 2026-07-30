@@ -16,20 +16,20 @@ interface GlowButtonProps {
 
 const variantStyles = {
   primary: {
-    background: 'linear-gradient(135deg, var(--accent), var(--accent-secondary))',
+    background: '#000000',
     border: 'none',
     color: '#0a0a0b',
-    hoverBg: 'linear-gradient(135deg, #7ec8e3, #94a3b8)',
+    hoverBg: '#000000',
   },
   secondary: {
     background: 'rgba(200, 205, 215, 0.03)',
     border: '1px solid var(--glass-border)',
     color: 'var(--text-secondary)',
-    hoverBg: 'rgba(200, 205, 215, 0.06)',
+    hoverBg: '#0a0a0a',
   },
   danger: {
     background: 'rgba(212, 115, 110, 0.08)',
-    border: '1px solid rgba(212, 115, 110, 0.15)',
+    border: '2px solid #333333',
     color: 'var(--color-error)',
     hoverBg: 'rgba(212, 115, 110, 0.12)',
   },

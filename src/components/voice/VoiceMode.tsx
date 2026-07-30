@@ -26,7 +26,7 @@ const stateColors: Record<VoiceState, { primary: string; glow: string; bg: strin
   wake_listening: { primary: '#a855f7', glow: 'rgba(168, 85, 247, 0.3)', bg: 'rgba(168, 85, 247, 0.04)' },
   listening: { primary: '#38bdf8', glow: 'rgba(56, 189, 248, 0.4)', bg: 'rgba(56, 189, 248, 0.06)' },
   processing: { primary: '#00b4ff', glow: 'rgba(0, 180, 255, 0.3)', bg: 'rgba(0, 180, 255, 0.04)' },
-  speaking: { primary: '#34d399', glow: 'rgba(52, 211, 153, 0.3)', bg: 'rgba(52, 211, 153, 0.04)' },
+  speaking: { primary: '#c0c0c0', glow: 'rgba(52, 211, 153, 0.3)', bg: 'rgba(52, 211, 153, 0.04)' },
 }
 
 const stateLabels: Record<VoiceState, string> = {
@@ -624,25 +624,25 @@ export default function VoiceMode() {
       }} />
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.03,
-        backgroundImage: 'linear-gradient(rgba(56, 189, 248, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(56, 189, 248, 0.5) 1px, transparent 1px)',
+        backgroundImage: '#000000',
         backgroundSize: '60px 60px',
       }} />
 
       {/* Settings Toggle */}
       <div style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 10, display: 'flex', gap: '8px' }}>
         <button onClick={() => setShowHistory(!showHistory)} style={{
-          width: '36px', height: '36px', borderRadius: '10px',
-          background: showHistory ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid ' + (showHistory ? 'rgba(56, 189, 248, 0.3)' : 'rgba(255, 255, 255, 0.06)'),
+          width: '36px', height: '36px', borderRadius: '0px',
+          background: showHistory ? 'rgba(56, 189, 248, 0.15)' : '#0a0a0a',
+          border: '1px solid ' + (showHistory ? 'rgba(56, 189, 248, 0.3)' : '#0a0a0a'),
           color: showHistory ? '#38bdf8' : 'rgba(255, 255, 255, 0.5)', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px',
         }}>
           {'\u{1F4AC}'}
         </button>
         <button onClick={() => setShowSettings(!showSettings)} style={{
-          width: '36px', height: '36px', borderRadius: '10px',
-          background: showSettings ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid ' + (showSettings ? 'rgba(56, 189, 248, 0.3)' : 'rgba(255, 255, 255, 0.06)'),
+          width: '36px', height: '36px', borderRadius: '0px',
+          background: showSettings ? 'rgba(56, 189, 248, 0.15)' : '#0a0a0a',
+          border: '1px solid ' + (showSettings ? 'rgba(56, 189, 248, 0.3)' : '#0a0a0a'),
           color: showSettings ? '#38bdf8' : 'rgba(255, 255, 255, 0.5)', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px',
         }}>
@@ -661,9 +661,9 @@ export default function VoiceMode() {
               position: 'absolute', top: '60px', right: '16px', zIndex: 10,
               width: '280px', padding: '16px',
               background: 'rgba(13, 17, 23, 0.95)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.06)',
-              borderRadius: '12px',
+
+              border: '2px solid #333333',
+              borderRadius: '0px',
             }}
           >
             <h4 style={{ margin: '0 0 12px', fontSize: '14px', color: 'rgba(255, 255, 255, 0.9)' }}>
@@ -678,14 +678,14 @@ export default function VoiceMode() {
                 <button
                   onClick={() => setSettings(s => ({ ...s, useGeminiTts: !s.useGeminiTts }))}
                   style={{
-                    width: '36px', height: '20px', borderRadius: '10px', border: 'none', cursor: 'pointer',
-                    background: settings.useGeminiTts ? 'rgba(52, 211, 153, 0.3)' : 'rgba(255, 255, 255, 0.1)',
+                    width: '36px', height: '20px', borderRadius: '0px', border: 'none', cursor: 'pointer',
+                    background: settings.useGeminiTts ? 'rgba(52, 211, 153, 0.3)' : '#111111',
                     position: 'relative', transition: 'background 0.2s',
                   }}
                 >
                   <div style={{
                     width: '16px', height: '16px', borderRadius: '50%',
-                    background: settings.useGeminiTts ? '#34d399' : 'rgba(255, 255, 255, 0.3)',
+                    background: settings.useGeminiTts ? '#c0c0c0' : 'rgba(255, 255, 255, 0.3)',
                     position: 'absolute', top: '2px',
                     left: settings.useGeminiTts ? '18px' : '2px',
                     transition: 'left 0.2s, background 0.2s',
@@ -704,9 +704,9 @@ export default function VoiceMode() {
                     onChange={(e) => setSettings(s => ({ ...s, geminiVoice: e.target.value }))}
                     style={{
                       width: '100%', padding: '8px', marginTop: '4px',
-                      background: 'rgba(0, 0, 0, 0.4)',
-                      border: '1px solid rgba(255, 255, 255, 0.06)',
-                      borderRadius: '6px', color: 'rgba(255, 255, 255, 0.9)',
+                      background: '#000000',
+                      border: '2px solid #333333',
+                      borderRadius: '0px', color: 'rgba(255, 255, 255, 0.9)',
                       fontSize: '13px', outline: 'none',
                     }}
                   >
@@ -738,9 +738,9 @@ export default function VoiceMode() {
                   onChange={(e) => setSettings((s) => ({ ...s, language: e.target.value, voiceURI: '' }))}
                   style={{
                     width: '100%', padding: '8px', marginTop: '4px',
-                    background: 'rgba(0, 0, 0, 0.4)',
-                    border: '1px solid rgba(255, 255, 255, 0.06)',
-                    borderRadius: '6px', color: 'rgba(255, 255, 255, 0.9)',
+                    background: '#000000',
+                    border: '2px solid #333333',
+                    borderRadius: '0px', color: 'rgba(255, 255, 255, 0.9)',
                     fontSize: '13px', outline: 'none',
                   }}
                 >
@@ -765,9 +765,9 @@ export default function VoiceMode() {
                     onChange={(e) => setSettings((s) => ({ ...s, voiceURI: e.target.value }))}
                     style={{
                       width: '100%', padding: '8px', marginTop: '4px',
-                      background: 'rgba(0, 0, 0, 0.4)',
-                      border: '1px solid rgba(255, 255, 255, 0.06)',
-                      borderRadius: '6px', color: 'rgba(255, 255, 255, 0.9)',
+                      background: '#000000',
+                      border: '2px solid #333333',
+                      borderRadius: '0px', color: 'rgba(255, 255, 255, 0.9)',
                       fontSize: '13px', outline: 'none',
                     }}
                   >
@@ -850,7 +850,7 @@ export default function VoiceMode() {
                 transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
                 style={{
                   position: 'absolute', inset: '-8px', borderRadius: '50%',
-                  border: '1px solid rgba(168, 85, 247, 0.2)',
+                  border: '2px solid #333333',
                   borderBottomColor: 'rgba(168, 85, 247, 0.5)',
                 }}
               />
@@ -910,9 +910,9 @@ export default function VoiceMode() {
                 transition={{ duration: 0.08 }}
                 style={{
                   width: '3px',
-                  borderRadius: '2px',
+                  borderRadius: '0px',
                   background: voiceState === 'speaking'
-                    ? '#34d399'
+                    ? '#c0c0c0'
                     : (voiceState === 'wake_listening' ? '#a855f7' : colors.primary),
                   transition: 'background 0.3s ease',
                 }}
@@ -949,8 +949,8 @@ export default function VoiceMode() {
                 YOU SAID
               </p>
               <p style={{
-                fontSize: '14px', lineHeight: 1.6, padding: '12px 16px', borderRadius: '10px',
-                background: 'rgba(56, 189, 248, 0.05)', border: '1px solid rgba(56, 189, 248, 0.1)',
+                fontSize: '14px', lineHeight: 1.6, padding: '12px 16px', borderRadius: '0px',
+                background: 'rgba(56, 189, 248, 0.05)', border: '2px solid #333333',
                 color: 'rgba(255, 255, 255, 0.85)', margin: 0,
               }}>
                 {transcript || interimText}
@@ -973,8 +973,8 @@ export default function VoiceMode() {
                 NERO
               </p>
               <p style={{
-                fontSize: '14px', lineHeight: 1.6, padding: '12px 16px', borderRadius: '10px',
-                background: 'rgba(52, 211, 153, 0.03)', border: '1px solid rgba(52, 211, 153, 0.08)',
+                fontSize: '14px', lineHeight: 1.6, padding: '12px 16px', borderRadius: '0px',
+                background: 'rgba(52, 211, 153, 0.03)', border: '2px solid #333333',
                 color: 'rgba(255, 255, 255, 0.8)', margin: 0,
               }}>
                 {responseText}
@@ -991,9 +991,9 @@ export default function VoiceMode() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               style={{
-                padding: '10px 16px', borderRadius: '10px',
-                background: 'rgba(248, 113, 113, 0.08)', border: '1px solid rgba(248, 113, 113, 0.2)',
-                color: '#f87171', fontSize: '13px', maxWidth: '400px',
+                padding: '10px 16px', borderRadius: '0px',
+                background: 'rgba(248, 113, 113, 0.08)', border: '2px solid #333333',
+                color: '#ffffff', fontSize: '13px', maxWidth: '400px',
                 cursor: 'pointer',
               }}
               onClick={() => setError(null)}
@@ -1014,7 +1014,7 @@ export default function VoiceMode() {
             transition={{ duration: 0.3 }}
             style={{
               maxHeight: '200px', overflowY: 'auto',
-              borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+              borderTop: '2px solid #333333',
               padding: '12px 20px',
               background: 'rgba(0, 0, 0, 0.2)',
             }}
@@ -1028,7 +1028,7 @@ export default function VoiceMode() {
                 style={{
                   fontSize: '10px', fontFamily: "'JetBrains Mono', monospace",
                   color: 'rgba(255, 255, 255, 0.3)', background: 'none', border: 'none',
-                  cursor: 'pointer', padding: '2px 6px', borderRadius: '4px',
+                  cursor: 'pointer', padding: '2px 6px', borderRadius: '0px',
                 }}
               >
                 CLEAR
@@ -1045,7 +1045,7 @@ export default function VoiceMode() {
                 }}
               >
                 <div style={{
-                  maxWidth: '85%', padding: '8px 12px', borderRadius: '10px',
+                  maxWidth: '85%', padding: '8px 12px', borderRadius: '0px',
                   background: msg.role === 'user' ? 'rgba(56, 189, 248, 0.08)' : 'rgba(52, 211, 153, 0.05)',
                   border: '1px solid ' + (msg.role === 'user' ? 'rgba(56, 189, 248, 0.15)' : 'rgba(52, 211, 153, 0.1)'),
                 }}>
@@ -1078,7 +1078,7 @@ export default function VoiceMode() {
       {/* Controls */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        gap: '16px', padding: '16px 20px', borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+        gap: '16px', padding: '16px 20px', borderTop: '2px solid #333333',
         position: 'relative', zIndex: 1,
       }}>
         {/* Continuous mode toggle */}
@@ -1093,9 +1093,9 @@ export default function VoiceMode() {
               }
             }}
             style={{
-              width: '44px', height: '44px', borderRadius: '12px',
-              background: continuousMode ? 'rgba(168, 85, 247, 0.15)' : 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid ' + (continuousMode ? 'rgba(168, 85, 247, 0.3)' : 'rgba(255, 255, 255, 0.06)'),
+              width: '44px', height: '44px', borderRadius: '0px',
+              background: continuousMode ? 'rgba(168, 85, 247, 0.15)' : '#0a0a0a',
+              border: '1px solid ' + (continuousMode ? 'rgba(168, 85, 247, 0.3)' : '#0a0a0a'),
               color: continuousMode ? '#a855f7' : 'rgba(255, 255, 255, 0.4)',
               cursor: 'pointer', fontSize: '18px',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -1116,10 +1116,10 @@ export default function VoiceMode() {
             animate={{ scale: 1 }}
             style={{
               width: '72px', height: '72px', borderRadius: '50%',
-              background: 'linear-gradient(135deg, rgba(248, 113, 113, 0.2), rgba(248, 113, 113, 0.05))',
+              background: '#ffffff',
               border: '2px solid rgba(248, 113, 113, 0.4)',
               boxShadow: '0 0 20px rgba(248, 113, 113, 0.15)',
-              color: '#f87171', cursor: 'pointer', fontSize: '24px',
+              color: '#ffffff', cursor: 'pointer', fontSize: '24px',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
             whileHover={{ boxShadow: '0 0 30px rgba(248, 113, 113, 0.3)' }}
@@ -1133,8 +1133,8 @@ export default function VoiceMode() {
             style={{
               width: '72px', height: '72px', borderRadius: '50%', position: 'relative',
               background: voiceState === 'wake_listening'
-                ? 'linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(168, 85, 247, 0.05))'
-                : 'linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(56, 189, 248, 0.05))',
+                ? '#000000'
+                : '#000000',
               border: '2px solid ' + (voiceState === 'wake_listening' ? 'rgba(168, 85, 247, 0.4)' : 'rgba(56, 189, 248, 0.4)'),
               boxShadow: voiceState === 'wake_listening'
                 ? '0 0 20px rgba(168, 85, 247, 0.15), 0 0 40px rgba(168, 85, 247, 0.05)'
@@ -1171,7 +1171,7 @@ export default function VoiceMode() {
               <motion.div
                 style={{
                   position: 'absolute', inset: '-6px', borderRadius: '50%',
-                  border: '1px solid rgba(168, 85, 247, 0.3)',
+                  border: '2px solid #333333',
                 }}
                 animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.1, 0.4] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -1191,9 +1191,9 @@ export default function VoiceMode() {
           <button
             onClick={handleClearConversation}
             style={{
-              width: '44px', height: '44px', borderRadius: '12px',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.06)',
+              width: '44px', height: '44px', borderRadius: '0px',
+              background: '#0a0a0a',
+              border: '2px solid #333333',
               color: 'rgba(255, 255, 255, 0.4)', cursor: 'pointer', fontSize: '16px',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}

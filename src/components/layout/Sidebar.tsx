@@ -172,7 +172,7 @@ export default function Sidebar({
       transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
     >
       {/* Brand */}
-      <div className="flex items-center gap-3 px-4 py-4" style={{ borderBottom: '1px solid rgba(200, 210, 224, 0.06)' }}>
+      <div className="flex items-center gap-3 px-4 py-4" style={{ borderBottom: '2px solid #333333' }}>
         <div
           className="flex items-center justify-center flex-shrink-0 rounded-xl neu-flat"
           style={{
@@ -266,10 +266,10 @@ export default function Sidebar({
                     <motion.div
                       className="absolute left-full ml-2 px-2 py-1 rounded-md text-xs whitespace-nowrap z-50"
                       style={{
-                        background: 'rgba(10, 10, 11, 0.92)',
-                        backdropFilter: 'blur(20px)',
-                        WebkitBackdropFilter: 'blur(20px)',
-                        border: '1px solid rgba(148, 163, 184, 0.12)',
+                        background: '#000000',
+
+
+                        border: '2px solid #333333',
                         color: 'var(--text-primary)',
                         boxShadow: '0 4px 16px rgba(0, 0, 0, 0.4), 0 0 12px rgba(148, 163, 184, 0.06)',
                       }}
@@ -288,7 +288,7 @@ export default function Sidebar({
 
         {/* Recent Chats section */}
         {!collapsed && recentChats.length > 0 && (
-          <div className="mt-4 pt-4" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
+          <div className="mt-4 pt-4" style={{ borderTop: '2px solid #333333' }}>
             <div className="flex items-center justify-between px-2 mb-2">
               <span className="text-[10px] font-semibold tracking-wider uppercase" style={{ color: 'var(--text-muted)' }}>
                 Recent
@@ -317,7 +317,7 @@ export default function Sidebar({
                       cursor: 'pointer',
                     }}
                     whileHover={{
-                      background: 'rgba(148, 163, 184, 0.04)',
+                      background: '#0a0a0a',
                       color: 'var(--text-secondary)',
                     }}
                     whileTap={{ scale: 0.98 }}
@@ -338,7 +338,7 @@ export default function Sidebar({
       </nav>
 
       {/* Bottom section */}
-      <div className="px-3 py-3" style={{ borderTop: '1px solid rgba(200, 210, 224, 0.06)' }}>
+      <div className="px-3 py-3" style={{ borderTop: '2px solid #333333' }}>
         {!collapsed && (
           <motion.button
             onClick={handleRefreshNews}
@@ -350,7 +350,7 @@ export default function Sidebar({
               fontSize: '11px',
             }}
             whileHover={!isRefreshingNews ? {
-              background: 'rgba(148, 163, 184, 0.04)',
+              background: '#0a0a0a',
               color: 'var(--accent)',
             } : undefined}
             whileTap={!isRefreshingNews ? { scale: 0.98 } : undefined}
@@ -386,7 +386,7 @@ export default function Sidebar({
         whileHover={{
           background: 'rgba(10, 10, 11, 0.95)',
           color: 'var(--accent)',
-          borderColor: 'rgba(148, 163, 184, 0.2)',
+          borderColor: '#222222',
         }}
         whileTap={{ scale: 0.9 }}
       >

@@ -36,7 +36,7 @@ export default function ShortcutsModal({ open, onClose }: { open: boolean; onClo
             style={{
               background: 'var(--glass-bg-strong)',
               border: '1px solid var(--glass-border)',
-              backdropFilter: 'blur(24px)',
+
             }}
             onClick={e => e.stopPropagation()}
           >

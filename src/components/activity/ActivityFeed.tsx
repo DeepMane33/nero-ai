@@ -7,23 +7,23 @@ import { getActivities, addActivity, type ActivityType, type Activity } from '@/
 const activityConfig: Record<ActivityType, { icon: React.ReactNode; color: string; glow: string; label: string }> = {
   chat: {
     icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
-    color: '#94a3b8', glow: 'none', label: 'Chat',
+    color: '#808080', glow: 'none', label: 'Chat',
   },
   memory: {
     icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>,
-    color: '#94a3b8', glow: 'none', label: 'Memory',
+    color: '#808080', glow: 'none', label: 'Memory',
   },
   research: {
     icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
-    color: '#94a3b8', glow: 'none', label: 'Research',
+    color: '#808080', glow: 'none', label: 'Research',
   },
   project: {
     icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>,
-    color: '#94a3b8', glow: 'none', label: 'Project',
+    color: '#808080', glow: 'none', label: 'Project',
   },
   system: {
     icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
-    color: '#94a3b8', glow: 'none', label: 'System',
+    color: '#808080', glow: 'none', label: 'System',
   },
 }
 
@@ -126,13 +126,13 @@ export default function ActivityFeed() {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '16px 20px',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+        borderBottom: '2px solid #333333',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div className="neu-flat" style={{
             width: '32px',
             height: '32px',
-            borderRadius: '8px',
+            borderRadius: '0px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -172,7 +172,7 @@ export default function ActivityFeed() {
       {/* Search + Filters */}
       <div style={{
         padding: '12px 20px',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+        borderBottom: '2px solid #333333',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
@@ -237,9 +237,9 @@ export default function ActivityFeed() {
                 className={isActive ? '' : 'neu-btn'}
                 style={{
                   padding: '5px 12px',
-                  borderRadius: '8px',
+                  borderRadius: '0px',
                   background: isActive
-                    ? 'rgba(255, 255, 255, 0.06)'
+                    ? '#0a0a0a'
                     : undefined,
                   boxShadow: isActive
                     ? 'inset 2px 2px 4px rgba(0, 0, 0, 0.4), inset -2px -2px 4px rgba(40, 44, 52, 0.06)'
@@ -263,8 +263,8 @@ export default function ActivityFeed() {
                 <span style={{
                   fontSize: '10px',
                   padding: '1px 5px',
-                  borderRadius: '4px',
-                  background: isActive ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.04)',
+                  borderRadius: '0px',
+                  background: isActive ? '#111111' : '#0a0a0a',
                   color: isActive ? 'inherit' : 'rgba(255, 255, 255, 0.25)',
                 }}>
                   {count}
@@ -305,9 +305,9 @@ export default function ActivityFeed() {
             margin: '16px',
             padding: '14px',
             background: 'rgba(248, 113, 113, 0.08)',
-            border: '1px solid rgba(248, 113, 113, 0.2)',
-            borderRadius: '10px',
-            color: '#f87171',
+            border: '2px solid #333333',
+            borderRadius: '0px',
+            color: '#ffffff',
             fontSize: '13px',
             textAlign: 'center',
           }}>
@@ -350,7 +350,7 @@ export default function ActivityFeed() {
                   <div style={{
                     flex: 1,
                     height: '1px',
-                    background: 'rgba(255, 255, 255, 0.04)',
+                    background: '#0a0a0a',
                   }} />
                   <span style={{
                     fontSize: '10px',
@@ -379,7 +379,7 @@ export default function ActivityFeed() {
                         padding: '10px 16px',
                         margin: '4px 12px',
                         cursor: 'pointer',
-                        borderRadius: '10px',
+                        borderRadius: '0px',
                       }}
                       whileHover={{ backgroundColor: 'rgba(176, 184, 196, 0.04)' }}
                     >
@@ -395,9 +395,9 @@ export default function ActivityFeed() {
                         <div style={{
                           width: '36px',
                           height: '36px',
-                          borderRadius: '10px',
-                          background: 'rgba(255, 255, 255, 0.04)',
-                          border: '1px solid rgba(255, 255, 255, 0.06)',
+                          borderRadius: '0px',
+                          background: '#0a0a0a',
+                          border: '2px solid #333333',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -413,7 +413,7 @@ export default function ActivityFeed() {
                             width: '1px',
                             flex: 1,
                             minHeight: '16px',
-                            background: 'linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))',
+                            background: '#000000',
                             marginTop: '4px',
                           }} />
                         )}
@@ -443,10 +443,10 @@ export default function ActivityFeed() {
                               fontSize: '9px',
                               fontFamily: "'JetBrains Mono', monospace",
                               padding: '2px 6px',
-                              borderRadius: '4px',
-                              background: 'rgba(255, 255, 255, 0.06)',
+                              borderRadius: '0px',
+                              background: '#0a0a0a',
                               color: 'rgba(255, 255, 255, 0.45)',
-                              border: '1px solid rgba(255, 255, 255, 0.06)',
+                              border: '2px solid #333333',
                               flexShrink: 0,
                               textTransform: 'uppercase',
                             }}>

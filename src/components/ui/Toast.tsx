@@ -57,7 +57,7 @@ function ToastContainer({ toasts }: { toasts: ToastItem[] }) {
               padding: '10px 16px',
               fontSize: '0.8rem',
               color: t.type === 'error' ? 'var(--color-error)' : t.type === 'success' ? 'var(--color-success)' : 'var(--text-secondary)',
-              backdropFilter: 'blur(16px)',
+
               boxShadow: 'var(--glass-shadow)',
               maxWidth: 320,
             }}

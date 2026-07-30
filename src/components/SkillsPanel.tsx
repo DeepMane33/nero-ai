@@ -24,13 +24,13 @@ interface SkillsData {
 }
 
 const BRAIN_COLORS: Record<string, string> = {
-  coding: '#94a3b8',
+  coding: '#808080',
   creative: '#b4a0d4',
   automation: '#8fb996',
   memory: '#c8b86a',
-  reasoning: '#7ec8e3',
+  reasoning: '#808080',
   research: '#7b8da4',
-  learning: '#d4736e',
+  learning: '#ffffff',
 };
 
 const BRAIN_ICONS: Record<string, string> = {
@@ -113,8 +113,8 @@ export default function SkillsPanel() {
               style={{
                 width: 40,
                 height: 40,
-                borderRadius: 12,
-                background: 'linear-gradient(135deg, rgba(0,191,255,0.15), rgba(167,139,250,0.15))',
+                borderRadius: 0,
+                background: '#000000',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -164,7 +164,7 @@ export default function SkillsPanel() {
             onClick={() => setActiveBrain(null)}
             style={{
               padding: '5px 12px',
-              borderRadius: 999,
+              borderRadius: 0,
               border: `1px solid ${!activeBrain ? 'var(--accent)' : 'var(--border-default)'}`,
               background: !activeBrain ? 'var(--accent-dim)' : 'transparent',
               color: !activeBrain ? 'var(--accent)' : 'var(--text-tertiary)',
@@ -183,7 +183,7 @@ export default function SkillsPanel() {
               onClick={() => setActiveBrain(activeBrain === brain ? null : brain)}
               style={{
                 padding: '5px 12px',
-                borderRadius: 999,
+                borderRadius: 0,
                 border: `1px solid ${activeBrain === brain ? BRAIN_COLORS[brain] : 'var(--border-default)'}`,
                 background: activeBrain === brain ? `${BRAIN_COLORS[brain]}15` : 'transparent',
                 color: activeBrain === brain ? BRAIN_COLORS[brain] : 'var(--text-tertiary)',
@@ -243,7 +243,7 @@ export default function SkillsPanel() {
                         fontSize: 10,
                         fontWeight: 500,
                         padding: '2px 8px',
-                        borderRadius: 999,
+                        borderRadius: 0,
                         background: `${BRAIN_COLORS[cat.brain]}15`,
                         color: BRAIN_COLORS[cat.brain],
                         border: `1px solid ${BRAIN_COLORS[cat.brain]}30`,
@@ -291,7 +291,7 @@ export default function SkillsPanel() {
                             alignItems: 'flex-start',
                             gap: 10,
                             padding: '8px 8px',
-                            borderRadius: 8,
+                            borderRadius: 0,
                             transition: 'background 0.15s',
                           }}
                           onMouseEnter={(e) => {

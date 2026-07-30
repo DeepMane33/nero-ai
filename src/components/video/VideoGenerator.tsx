@@ -119,8 +119,8 @@ export default function VideoGenerator() {
             className="max-w-md text-center rounded-xl p-6"
             style={{
               background: 'rgba(255,255,255,0.02)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              backdropFilter: 'blur(8px)',
+              border: '2px solid #333333',
+
             }}
           >
             <h3
@@ -140,7 +140,7 @@ export default function VideoGenerator() {
               className="text-left rounded-lg p-4 mb-4 font-mono text-xs space-y-2"
               style={{
                 background: 'rgba(0,0,0,0.3)',
-                border: '1px solid rgba(56,189,248,0.1)',
+                border: '2px solid #333333',
                 color: 'rgba(56,189,248,0.7)',
               }}
             >
@@ -165,7 +165,7 @@ export default function VideoGenerator() {
               </p>
               <p
                 className="pl-4"
-                style={{ color: '#34d399' }}
+                style={{ color: '#c0c0c0' }}
               >
                 HF_TOKEN=hf_your_token_here
               </p>
@@ -205,16 +205,16 @@ export default function VideoGenerator() {
       <div
         className="flex items-center justify-between px-6 py-4 shrink-0 relative z-10"
         style={{
-          borderBottom: '1px solid rgba(255,255,255,0.04)',
+          borderBottom: '2px solid #333333',
           background: 'rgba(10,10,26,0.8)',
-          backdropFilter: 'blur(12px)',
+
         }}
       >
         <div className="flex items-center gap-3">
           <div
             className="w-2 h-2 rounded-full"
             style={{
-              background: isGenerating ? '#38bdf8' : '#34d399',
+              background: isGenerating ? '#38bdf8' : '#c0c0c0',
               boxShadow: isGenerating
                 ? '0 0 8px rgba(56,189,248,0.6)'
                 : '0 0 8px rgba(52,211,153,0.6)',
@@ -231,7 +231,7 @@ export default function VideoGenerator() {
             className="px-2 py-0.5 rounded-full text-[10px] font-mono tracking-wider"
             style={{
               background: 'rgba(168,85,247,0.08)',
-              border: '1px solid rgba(168,85,247,0.15)',
+              border: '2px solid #333333',
               color: 'rgba(168,85,247,0.7)',
             }}
           >
@@ -257,8 +257,8 @@ export default function VideoGenerator() {
             className="rounded-xl p-5"
             style={{
               background: 'rgba(255,255,255,0.02)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              backdropFilter: 'blur(8px)',
+              border: '2px solid #333333',
+
             }}
           >
             <label
@@ -338,7 +338,7 @@ export default function VideoGenerator() {
                   <motion.div
                     className="h-full rounded-full"
                     style={{
-                      background: 'linear-gradient(90deg, #a855f7, #38bdf8, #38bdf8)',
+                      background: '#000000',
                       backgroundSize: '200% 100%',
                       animation: 'gradient-shift 2s linear infinite',
                     }}
@@ -359,8 +359,8 @@ export default function VideoGenerator() {
                   className="mt-3 px-4 py-3 rounded-lg text-sm flex items-center gap-2"
                   style={{
                     background: 'rgba(248,113,113,0.1)',
-                    border: '1px solid rgba(248,113,113,0.25)',
-                    color: '#f87171',
+                    border: '2px solid #333333',
+                    color: '#ffffff',
                   }}
                 >
                   <svg
@@ -447,7 +447,7 @@ export default function VideoGenerator() {
                       className="group relative rounded-xl overflow-hidden"
                       style={{
                         background: 'rgba(255,255,255,0.02)',
-                        border: '1px solid rgba(255,255,255,0.06)',
+                        border: '2px solid #333333',
                       }}
                     >
                       {/* Gradient border glow on hover */}
@@ -473,7 +473,7 @@ export default function VideoGenerator() {
                         className="p-3 flex items-center justify-between gap-2"
                         style={{
                           background: 'rgba(0,0,0,0.3)',
-                          borderTop: '1px solid rgba(255,255,255,0.04)',
+                          borderTop: '2px solid #333333',
                         }}
                       >
                         <p

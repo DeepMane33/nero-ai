@@ -153,8 +153,8 @@ export default function VisionAnalysis() {
 
   const dropZoneStyle: React.CSSProperties = {
     padding: '40px 20px',
-    borderRadius: '12px',
-    border: `2px dashed ${isDragging ? '#38bdf8' : 'rgba(255, 255, 255, 0.1)'}`,
+    borderRadius: '0px',
+    border: `2px dashed ${isDragging ? '#38bdf8' : '#111111'}`,
     background: isDragging ? 'rgba(56, 189, 248, 0.05)' : 'rgba(0, 0, 0, 0.3)',
     textAlign: 'center',
     cursor: 'pointer',
@@ -164,9 +164,9 @@ export default function VisionAnalysis() {
   return (
     <div style={{
       background: 'rgba(13, 17, 23, 0.7)',
-      backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 255, 255, 0.06)',
-      borderRadius: '16px',
+
+      border: '2px solid #333333',
+      borderRadius: '0px',
       overflow: 'hidden',
     }}>
       {/* Header */}
@@ -175,15 +175,15 @@ export default function VisionAnalysis() {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '16px 20px',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+        borderBottom: '2px solid #333333',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
             width: '32px',
             height: '32px',
-            borderRadius: '8px',
-            background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05))',
-            border: '1px solid rgba(56, 189, 248, 0.3)',
+            borderRadius: '0px',
+            background: '#000000',
+            border: '2px solid #333333',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -202,9 +202,9 @@ export default function VisionAnalysis() {
         </div>
         <button onClick={handleReset} style={{
           padding: '6px 12px',
-          borderRadius: '8px',
-          background: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.06)',
+          borderRadius: '0px',
+          background: '#0a0a0a',
+          border: '2px solid #333333',
           color: 'rgba(255, 255, 255, 0.5)',
           fontSize: '12px',
           cursor: 'pointer',
@@ -256,9 +256,9 @@ export default function VisionAnalysis() {
               style={{
                 flex: 1,
                 padding: '10px 14px',
-                background: 'rgba(0, 0, 0, 0.4)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-                borderRadius: '8px',
+                background: '#000000',
+                border: '2px solid #333333',
+                borderRadius: '0px',
                 color: 'rgba(255, 255, 255, 0.9)',
                 fontSize: '14px',
                 fontFamily: "'JetBrains Mono', monospace",
@@ -267,9 +267,9 @@ export default function VisionAnalysis() {
             />
             <button onClick={handleLoadUrl} style={{
               padding: '8px 16px',
-              background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05))',
-              border: '1px solid rgba(56, 189, 248, 0.3)',
-              borderRadius: '8px',
+              background: '#000000',
+              border: '2px solid #333333',
+              borderRadius: '0px',
               color: '#38bdf8',
               fontSize: '13px',
               cursor: 'pointer',
@@ -289,9 +289,9 @@ export default function VisionAnalysis() {
               style={{ position: 'relative' }}
             >
               <div style={{
-                borderRadius: '12px',
+                borderRadius: '0px',
                 overflow: 'hidden',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
+                border: '2px solid #333333',
                 background: 'rgba(0, 0, 0, 0.3)',
               }}>
                 <img
@@ -312,9 +312,9 @@ export default function VisionAnalysis() {
                 right: '8px',
                 width: '28px',
                 height: '28px',
-                borderRadius: '6px',
+                borderRadius: '0px',
                 background: 'rgba(0, 0, 0, 0.7)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                border: '2px solid #333333',
                 color: 'rgba(255, 255, 255, 0.7)',
                 cursor: 'pointer',
                 display: 'flex',
@@ -338,11 +338,11 @@ export default function VisionAnalysis() {
             style={{
               width: '100%',
               padding: '14px',
-              borderRadius: '12px',
+              borderRadius: '0px',
               background: loading
                 ? 'rgba(56, 189, 248, 0.1)'
-                : 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05))',
-              border: '1px solid rgba(56, 189, 248, 0.3)',
+                : '#000000',
+              border: '2px solid #333333',
               color: '#38bdf8',
               fontSize: '15px',
               fontWeight: 600,
@@ -365,16 +365,16 @@ export default function VisionAnalysis() {
             >
               <div style={{
                 height: '4px',
-                borderRadius: '2px',
-                background: 'rgba(255, 255, 255, 0.06)',
+                borderRadius: '0px',
+                background: '#0a0a0a',
                 overflow: 'hidden',
               }}>
                 <motion.div
                   animate={{ width: `${progress}%` }}
                   style={{
                     height: '100%',
-                    borderRadius: '2px',
-                    background: 'linear-gradient(90deg, #38bdf8, #34d399)',
+                    borderRadius: '0px',
+                    background: '#000000',
                     boxShadow: '0 0 8px rgba(56, 189, 248, 0.4)',
                   }}
                 />
@@ -401,8 +401,8 @@ export default function VisionAnalysis() {
               exit={{ opacity: 0, y: -10 }}
               style={{
                 background: 'rgba(0, 0, 0, 0.3)',
-                borderRadius: '12px',
-                border: '1px solid rgba(56, 189, 248, 0.1)',
+                borderRadius: '0px',
+                border: '2px solid #333333',
                 overflow: 'hidden',
               }}
             >
@@ -411,7 +411,7 @@ export default function VisionAnalysis() {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 padding: '12px 16px',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+                borderBottom: '2px solid #333333',
               }}>
                 <span style={{
                   fontSize: '12px',
@@ -423,9 +423,9 @@ export default function VisionAnalysis() {
                 </span>
                 <button onClick={handleCopyResult} style={{
                   padding: '4px 10px',
-                  borderRadius: '6px',
+                  borderRadius: '0px',
                   background: 'rgba(56, 189, 248, 0.1)',
-                  border: '1px solid rgba(56, 189, 248, 0.2)',
+                  border: '2px solid #333333',
                   color: '#38bdf8',
                   fontSize: '11px',
                   cursor: 'pointer',
@@ -462,9 +462,9 @@ export default function VisionAnalysis() {
                       {result.objects.map((obj, i) => (
                         <span key={i} style={{
                           padding: '4px 10px',
-                          borderRadius: '6px',
+                          borderRadius: '0px',
                           background: 'rgba(56, 189, 248, 0.08)',
-                          border: '1px solid rgba(56, 189, 248, 0.15)',
+                          border: '2px solid #333333',
                           color: '#38bdf8',
                           fontSize: '12px',
                         }}>
@@ -484,9 +484,9 @@ export default function VisionAnalysis() {
                       {result.tags.map((tag, i) => (
                         <span key={i} style={{
                           padding: '4px 10px',
-                          borderRadius: '6px',
+                          borderRadius: '0px',
                           background: 'rgba(168, 85, 247, 0.08)',
-                          border: '1px solid rgba(168, 85, 247, 0.15)',
+                          border: '2px solid #333333',
                           color: '#a855f7',
                           fontSize: '12px',
                         }}>
@@ -501,10 +501,10 @@ export default function VisionAnalysis() {
                   <div style={{
                     padding: '12px',
                     background: 'rgba(0, 0, 0, 0.3)',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(255, 255, 255, 0.04)',
+                    borderRadius: '0px',
+                    border: '2px solid #333333',
                   }}>
-                    <span style={{ fontSize: '11px', color: '#34d399', fontFamily: "'JetBrains Mono', monospace" }}>
+                    <span style={{ fontSize: '11px', color: '#c0c0c0', fontFamily: "'JetBrains Mono', monospace" }}>
                       OCR EXTRACTED TEXT
                     </span>
                     <pre style={{
@@ -534,9 +534,9 @@ export default function VisionAnalysis() {
               style={{
                 padding: '12px 16px',
                 background: 'rgba(248, 113, 113, 0.08)',
-                border: '1px solid rgba(248, 113, 113, 0.2)',
-                borderRadius: '10px',
-                color: '#f87171',
+                border: '2px solid #333333',
+                borderRadius: '0px',
+                color: '#ffffff',
                 fontSize: '13px',
               }}
             >

@@ -53,20 +53,20 @@ interface ConversationSidebarProps {
 /* ------------------------------------------------------------------ */
 
 const FOLDERS: Folder[] = [
-  { id: 'all', name: 'All', icon: 'chat', color: '#94a3b8' },
-  { id: 'default', name: 'Default', icon: 'home', color: '#94a3b8' },
+  { id: 'all', name: 'All', icon: 'chat', color: '#808080' },
+  { id: 'default', name: 'Default', icon: 'home', color: '#808080' },
   { id: 'research', name: 'Research', icon: 'search', color: '#b4a0d4' },
   { id: 'code', name: 'Code', icon: 'code', color: '#8fb996' },
-  { id: 'creative', name: 'Creative', icon: 'sparkle', color: '#7ec8e3' },
+  { id: 'creative', name: 'Creative', icon: 'sparkle', color: '#808080' },
   { id: 'analysis', name: 'Analysis', icon: 'chart', color: '#c8b86a' },
   { id: 'archive', name: 'Archive', icon: 'archive', color: '#555a63' },
 ];
 
 const BRAIN_BADGES: Record<string, { color: string; label: string }> = {
-  default: { color: '#94a3b8', label: 'General' },
+  default: { color: '#808080', label: 'General' },
   research: { color: '#b4a0d4', label: 'Research' },
   code: { color: '#8fb996', label: 'Code' },
-  creative: { color: '#7ec8e3', label: 'Creative' },
+  creative: { color: '#808080', label: 'Creative' },
   analysis: { color: '#c8b86a', label: 'Analysis' },
 };
 
@@ -633,7 +633,7 @@ export default function ConversationSidebar({
           <div style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)',
+            background: '#000000',
             animation: 'shimmer 1.5s infinite',
           }} />
         </motion.div>
@@ -699,7 +699,7 @@ export default function ConversationSidebar({
           <div style={{
             width: 16,
             height: 16,
-            borderRadius: 4,
+            borderRadius: 0,
             border: isSelected
               ? '1.5px solid var(--accent)'
               : '1.5px solid var(--text-tertiary)',
@@ -736,9 +736,9 @@ export default function ConversationSidebar({
                 onClick={e => e.stopPropagation()}
                 style={{
                   flex: 1,
-                  background: 'rgba(255, 255, 255, 0.06)',
+                  background: '#0a0a0a',
                   border: '1px solid var(--accent)',
-                  borderRadius: 4,
+                  borderRadius: 0,
                   padding: '2px 6px',
                   color: 'var(--text-primary)',
                   fontSize: 12,
@@ -769,7 +769,7 @@ export default function ConversationSidebar({
               fontSize: 9,
               fontWeight: 600,
               padding: '1px 5px',
-              borderRadius: 3,
+              borderRadius: 0,
               background: badge.color + '22',
               color: badge.color,
               border: '1px solid ' + badge.color + '44',
@@ -860,7 +860,7 @@ export default function ConversationSidebar({
           left: x,
           top: y,
           background: 'var(--bg-glass-heavy)',
-          backdropFilter: 'blur(24px)',
+
           border: '1px solid var(--glass-border)',
           borderRadius: 'var(--radius-md)',
           padding: 4,
@@ -914,7 +914,7 @@ export default function ConversationSidebar({
                   left: '100%',
                   top: 0,
                   background: 'var(--bg-glass-heavy)',
-                  backdropFilter: 'blur(24px)',
+
                   border: '1px solid var(--glass-border)',
                   borderRadius: 'var(--radius-md)',
                   padding: 4,
@@ -978,7 +978,7 @@ export default function ConversationSidebar({
                   padding: '4px 10px',
                   fontSize: 11,
                   background: 'rgba(248, 113, 113, 0.15)',
-                  borderRadius: 4,
+                  borderRadius: 0,
                   flex: 1,
                   justifyContent: 'center',
                 }}
@@ -991,7 +991,7 @@ export default function ConversationSidebar({
                   ...itemStyle(),
                   padding: '4px 10px',
                   fontSize: 11,
-                  borderRadius: 4,
+                  borderRadius: 0,
                   flex: 1,
                   justifyContent: 'center',
                 }}
@@ -1158,8 +1158,8 @@ export default function ConversationSidebar({
                 alignItems: 'center',
                 gap: 4,
                 background: 'rgba(248, 113, 113, 0.12)',
-                border: '1px solid rgba(248, 113, 113, 0.25)',
-                borderRadius: 4,
+                border: '2px solid #333333',
+                borderRadius: 0,
                 color: 'var(--color-error)',
                 fontSize: 10,
                 fontWeight: 600,
@@ -1177,9 +1177,9 @@ export default function ConversationSidebar({
               display: 'flex',
               alignItems: 'center',
               gap: 4,
-              background: 'rgba(255, 255, 255, 0.04)',
+              background: '#0a0a0a',
               border: '1px solid var(--glass-border)',
-              borderRadius: 4,
+              borderRadius: 0,
               color: 'var(--text-secondary)',
               fontSize: 10,
               padding: '3px 8px',
@@ -1218,7 +1218,7 @@ export default function ConversationSidebar({
               height: 34,
               borderRadius: 'var(--radius-sm)',
               background: 'var(--bg-glass-heavy)',
-              backdropFilter: 'blur(10px)',
+
               border: '1px solid var(--glass-border)',
               color: 'var(--text-secondary)',
               cursor: 'pointer',
@@ -1252,7 +1252,7 @@ export default function ConversationSidebar({
                 bottom: 0,
                 width: 280,
                 background: 'var(--sidebar-bg)',
-                backdropFilter: 'blur(24px)',
+
                 borderRight: '1px solid var(--glass-border)',
                 display: 'flex',
                 flexDirection: 'column',
@@ -1287,9 +1287,9 @@ export default function ConversationSidebar({
                       fontSize: 10,
                       fontWeight: 500,
                       color: 'var(--text-tertiary)',
-                      background: 'rgba(255, 255, 255, 0.04)',
+                      background: '#0a0a0a',
                       padding: '1px 6px',
-                      borderRadius: 10,
+                      borderRadius: 0,
                     }}>
                       {totalCount}
                     </span>
@@ -1325,7 +1325,7 @@ export default function ConversationSidebar({
                       style={{
                         background: bulkMode
                           ? 'var(--accent-dim)'
-                          : 'rgba(255, 255, 255, 0.04)',
+                          : '#0a0a0a',
                         border: '1px solid',
                         borderColor: bulkMode
                           ? 'var(--accent-glass)'
@@ -1349,7 +1349,7 @@ export default function ConversationSidebar({
                       title="Close (Esc)"
                       className="glass-btn"
                       style={{
-                        background: 'rgba(255, 255, 255, 0.04)',
+                        background: '#0a0a0a',
                         border: '1px solid var(--glass-border)',
                         borderRadius: 'var(--radius-sm)',
                         color: 'var(--text-secondary)',
@@ -1386,7 +1386,7 @@ export default function ConversationSidebar({
                     placeholder="Search conversations..."
                     style={{
                       width: '100%',
-                      background: 'rgba(255, 255, 255, 0.04)',
+                      background: '#0a0a0a',
                       border: '1px solid var(--glass-border)',
                       borderRadius: 'var(--radius-sm)',
                       padding: '7px 8px 7px 32px',
@@ -1503,7 +1503,7 @@ export default function ConversationSidebar({
                       border: 'none',
                       cursor: 'pointer',
                       padding: '2px 4px',
-                      borderRadius: 4,
+                      borderRadius: 0,
                       transition: 'color 0.15s',
                     }}
                     onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
@@ -1524,7 +1524,7 @@ export default function ConversationSidebar({
                           right: 0,
                           top: '100%',
                           background: 'var(--bg-glass-heavy)',
-                          backdropFilter: 'blur(24px)',
+
                           border: '1px solid var(--glass-border)',
                           borderRadius: 'var(--radius-md)',
                           padding: 4,
@@ -1542,7 +1542,7 @@ export default function ConversationSidebar({
                               alignItems: 'center',
                               gap: 8,
                               padding: '6px 10px',
-                              borderRadius: 4,
+                              borderRadius: 0,
                               fontSize: 12,
                               color: sortBy === opt.id ? 'var(--accent)' : 'var(--text-primary)',
                               background: sortBy === opt.id ? 'var(--accent-dim)' : 'transparent',
@@ -1671,9 +1671,9 @@ export default function ConversationSidebar({
                   gap: 4,
                 }}>
                   <kbd style={{
-                    background: 'rgba(255, 255, 255, 0.06)',
+                    background: '#0a0a0a',
                     border: '1px solid var(--glass-border)',
-                    borderRadius: 3,
+                    borderRadius: 0,
                     padding: '1px 4px',
                     fontSize: 9,
                     fontFamily: 'var(--font-mono)',
@@ -1690,9 +1690,9 @@ export default function ConversationSidebar({
                   gap: 4,
                 }}>
                   <kbd style={{
-                    background: 'rgba(255, 255, 255, 0.06)',
+                    background: '#0a0a0a',
                     border: '1px solid var(--glass-border)',
-                    borderRadius: 3,
+                    borderRadius: 0,
                     padding: '1px 4px',
                     fontSize: 9,
                     fontFamily: 'var(--font-mono)',
@@ -1740,7 +1740,7 @@ export default function ConversationSidebar({
               fontWeight: 500,
               zIndex: 300,
               maxWidth: 300,
-              backdropFilter: 'blur(16px)',
+
               boxShadow: 'var(--shadow-elevated)',
               background: toast.type === 'error'
                 ? 'rgba(248, 113, 113, 0.15)'

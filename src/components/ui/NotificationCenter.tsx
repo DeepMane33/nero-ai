@@ -94,7 +94,7 @@ export default function NotificationCenter() {
             style={{
               background: 'var(--glass-bg-strong)',
               border: '1px solid var(--glass-border)',
-              backdropFilter: 'blur(24px)',
+
               boxShadow: 'var(--glass-shadow-lg)',
             }}
           >

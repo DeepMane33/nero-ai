@@ -13,7 +13,7 @@ export default function Waveform({
   isActive,
   barCount = 16,
   height = 32,
-  color = '#94a3b8',
+  color = '#808080',
 }: WaveformProps) {
   const bars = Array.from({ length: barCount }, (_, i) => i)
 

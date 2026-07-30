@@ -185,7 +185,7 @@ export default function KnowledgeGraph() {
         ctx.beginPath();
         ctx.moveTo(src.x || 0, src.y || 0);
         ctx.lineTo(tgt.x || 0, tgt.y || 0);
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+        ctx.strokeStyle = '#0a0a0a';
         ctx.lineWidth = 1;
         ctx.stroke();
 
@@ -450,9 +450,9 @@ export default function KnowledgeGraph() {
 
   const btnStyle: React.CSSProperties = {
     background: '#16171d',
-    borderRadius: 8,
+    borderRadius: 0,
     boxShadow: '3px 3px 6px rgba(0, 0, 0, 0.4), -3px -3px 6px rgba(40, 44, 52, 0.1)',
-    border: '1px solid rgba(255, 255, 255, 0.03)',
+    border: '2px solid #333333',
     padding: '8px 14px',
     color: 'rgba(255, 255, 255, 0.8)',
     fontSize: 12,
@@ -468,7 +468,7 @@ export default function KnowledgeGraph() {
     ...btnStyle,
     background: '#0e0f13',
     boxShadow: 'inset 3px 3px 6px rgba(0, 0, 0, 0.5), inset -3px -3px 6px rgba(40, 44, 52, 0.06)',
-    border: '1px solid rgba(176, 184, 196, 0.15)',
+    border: '2px solid #333333',
     color: '#b0b8c4',
   };
 
@@ -480,7 +480,7 @@ export default function KnowledgeGraph() {
     height: '100%',
     background: '#0e0f13',
     boxShadow: '-4px 0 12px rgba(0, 0, 0, 0.4)',
-    borderLeft: '1px solid rgba(255, 255, 255, 0.04)',
+    borderLeft: '2px solid #333333',
     padding: 20,
     overflowY: 'auto',
     zIndex: 10,
@@ -492,9 +492,9 @@ export default function KnowledgeGraph() {
     left: 16,
     width: 280,
     background: 'rgba(10, 11, 15, 0.95)',
-    backdropFilter: 'blur(20px)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    borderRadius: 12,
+
+    border: '2px solid #333333',
+    borderRadius: 0,
     padding: 16,
     zIndex: 20,
   };
@@ -503,8 +503,8 @@ export default function KnowledgeGraph() {
     width: '100%',
     background: '#0e0f13',
     boxShadow: 'inset 3px 3px 6px rgba(0, 0, 0, 0.5), inset -3px -3px 6px rgba(40, 44, 52, 0.06)',
-    border: '1px solid rgba(0, 0, 0, 0.15)',
-    borderRadius: 6,
+    border: '2px solid #333333',
+    borderRadius: 0,
     padding: '8px 10px',
     color: 'rgba(255, 255, 255, 0.9)',
     fontSize: 12,
@@ -666,7 +666,7 @@ export default function KnowledgeGraph() {
               <div style={{
                 display: 'inline-block',
                 padding: '3px 10px',
-                borderRadius: 6,
+                borderRadius: 0,
                 fontSize: 12,
                 fontWeight: 600,
                 background: `${NODE_COLORS[selectedNode.type]}22`,
@@ -697,7 +697,7 @@ export default function KnowledgeGraph() {
               </div>
             </div>
             <button
-              style={{ ...btnStyle, width: '100%', justifyContent: 'center', marginTop: 8, color: '#f87171', borderColor: 'rgba(248, 113, 113, 0.2)' }}
+              style={{ ...btnStyle, width: '100%', justifyContent: 'center', marginTop: 8, color: '#ffffff', borderColor: 'rgba(248, 113, 113, 0.2)' }}
               onClick={() => {
                 setNodes(prev => prev.filter(n => n.id !== selectedNode.id));
                 setEdges(prev => prev.filter(e => e.source !== selectedNode.id && e.target !== selectedNode.id));
@@ -721,7 +721,7 @@ export default function KnowledgeGraph() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background: 'rgba(10, 11, 15, 0.8)',
+              background: '#050505',
               zIndex: 30,
             }}
             initial={{ opacity: 0 }}
@@ -749,9 +749,9 @@ export default function KnowledgeGraph() {
               left: tooltip.x,
               top: tooltip.y,
               background: 'rgba(10, 11, 15, 0.95)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: 8,
+
+              border: '2px solid #333333',
+              borderRadius: 0,
               padding: '8px 12px',
               maxWidth: 240,
               zIndex: 100,
@@ -780,7 +780,7 @@ export default function KnowledgeGraph() {
               bottom: 20,
               right: 20,
               padding: '10px 16px',
-              borderRadius: 8,
+              borderRadius: 0,
               fontSize: 12,
               fontWeight: 500,
               zIndex: 200,

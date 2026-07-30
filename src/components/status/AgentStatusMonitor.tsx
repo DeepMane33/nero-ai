@@ -34,20 +34,20 @@ interface SystemHealth {
 }
 
 const brainDefaults: Omit<BrainInfo, 'status' | 'lastUsed' | 'stats'>[] = [
-  { id: 'reasoning', name: 'Reasoning', icon: '\uD83E\uDDE9', color: '#94a3b8', description: 'Logical analysis, problem solving' },
+  { id: 'reasoning', name: 'Reasoning', icon: '\uD83E\uDDE9', color: '#808080', description: 'Logical analysis, problem solving' },
   { id: 'coding', name: 'Coding', icon: '\uD83D\uDCBB', color: '#8fb996', description: 'Code generation, debugging' },
   { id: 'research', name: 'Research', icon: '\uD83D\uDD2C', color: '#b4a0d4', description: 'Information gathering, analysis' },
-  { id: 'creative', name: 'Creative', icon: '\uD83C\uDFA8', color: '#7ec8e3', description: 'Writing, brainstorming, ideation' },
+  { id: 'creative', name: 'Creative', icon: '\uD83C\uDFA8', color: '#808080', description: 'Writing, brainstorming, ideation' },
   { id: 'memory', name: 'Memory', icon: '\uD83E\uDDE0', color: '#c8b86a', description: 'Recall, context management' },
   { id: 'learning', name: 'Learning', icon: '\uD83D\uDCDA', color: '#7b8da4', description: 'Knowledge synthesis, teaching' },
-  { id: 'automation', name: 'Automation', icon: '\uD83E\uDD16', color: '#94a3b8', description: 'Task execution, workflows' },
+  { id: 'automation', name: 'Automation', icon: '\uD83E\uDD16', color: '#808080', description: 'Task execution, workflows' },
 ]
 
 const statusColors: Record<BrainStatus, { bg: string; text: string; glow: string }> = {
-  active: { bg: 'rgba(126, 221, 214, 0.12)', text: '#7eddd6', glow: 'rgba(126, 221, 214, 0.35)' },
+  active: { bg: 'rgba(126, 221, 214, 0.12)', text: '#c0c0c0', glow: 'rgba(126, 221, 214, 0.35)' },
   idle: { bg: 'rgba(200, 205, 215, 0.04)', text: 'rgba(138, 143, 152, 0.4)', glow: 'transparent' },
-  standby: { bg: 'rgba(148, 163, 184, 0.08)', text: '#94a3b8', glow: 'rgba(148, 163, 184, 0.2)' },
-  error: { bg: 'rgba(212, 115, 110, 0.1)', text: '#d4736e', glow: 'rgba(212, 115, 110, 0.25)' },
+  standby: { bg: '#111111', text: '#808080', glow: '#222222' },
+  error: { bg: 'rgba(212, 115, 110, 0.1)', text: '#ffffff', glow: 'rgba(212, 115, 110, 0.25)' },
 }
 
 interface AgentStatusMonitorProps {
@@ -126,17 +126,17 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
   }
 
   const getHealthColor = (score: number) => {
-    if (score >= 80) return '#34d399'
+    if (score >= 80) return '#c0c0c0'
     if (score >= 50) return '#eab308'
-    return '#f87171'
+    return '#ffffff'
   }
 
   return (
     <div style={{
       background: 'rgba(13, 17, 23, 0.7)',
-      backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 255, 255, 0.06)',
-      borderRadius: '16px',
+
+      border: '2px solid #333333',
+      borderRadius: '0px',
       overflow: 'hidden',
     }}>
       {/* Header */}
@@ -145,15 +145,15 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '16px 20px',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+        borderBottom: '2px solid #333333',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
             width: '32px',
             height: '32px',
-            borderRadius: '8px',
-            background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05))',
-            border: '1px solid rgba(56, 189, 248, 0.3)',
+            borderRadius: '0px',
+            background: '#000000',
+            border: '2px solid #333333',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -182,7 +182,7 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
           alignItems: 'center',
           gap: '8px',
           padding: '6px 12px',
-          borderRadius: '8px',
+          borderRadius: '0px',
           background: getHealthColor(healthScore) + '12',
           border: '1px solid ' + getHealthColor(healthScore) + '30',
         }}>
@@ -218,7 +218,7 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
       {/* System Health Dashboard */}
       <div style={{
         padding: '14px 20px',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+        borderBottom: '2px solid #333333',
         display: 'flex',
         flexDirection: 'column',
         gap: '12px',
@@ -236,7 +236,7 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
             <span style={{
               fontSize: '13px',
               fontWeight: 700,
-              color: usagePercent > 66 ? '#f87171' : usagePercent > 33 ? '#eab308' : '#34d399',
+              color: usagePercent > 66 ? '#ffffff' : usagePercent > 33 ? '#eab308' : '#c0c0c0',
               fontFamily: "'JetBrains Mono', monospace",
             }}>
               {usagePercent}%
@@ -244,8 +244,8 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
           </div>
           <div style={{
             height: '6px',
-            borderRadius: '3px',
-            background: 'rgba(255, 255, 255, 0.06)',
+            borderRadius: '0px',
+            background: '#0a0a0a',
             overflow: 'hidden',
           }}>
             <motion.div
@@ -253,12 +253,12 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
               transition={{ duration: 0.6, ease: 'easeOut' }}
               style={{
                 height: '100%',
-                borderRadius: '3px',
+                borderRadius: '0px',
                 background: usagePercent > 66
-                  ? 'linear-gradient(90deg, #f87171, #ff6b8a)'
+                  ? '#000000'
                   : usagePercent > 33
-                  ? 'linear-gradient(90deg, #eab308, #facc15)'
-                  : 'linear-gradient(90deg, #34d399, #4ade80)',
+                  ? '#000000'
+                  : '#000000',
                 boxShadow: '0 0 8px ' + (usagePercent > 66 ? 'rgba(248, 113, 113, 0.4)' : usagePercent > 33 ? 'rgba(234, 179, 8, 0.4)' : 'rgba(52, 211, 153, 0.4)'),
               }}
             />
@@ -273,15 +273,15 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
         }}>
           {[
             { label: 'UPTIME', value: systemHealth.uptime, color: '#38bdf8' },
-            { label: 'REQUESTS', value: systemHealth.totalRequests.toString(), color: '#34d399' },
+            { label: 'REQUESTS', value: systemHealth.totalRequests.toString(), color: '#c0c0c0' },
             { label: 'LATENCY', value: systemHealth.avgLatency + 'ms', color: '#a855f7' },
-            { label: 'ERRORS', value: (systemHealth.errorRate * 100).toFixed(1) + '%', color: systemHealth.errorRate > 0.05 ? '#f87171' : '#34d399' },
+            { label: 'ERRORS', value: (systemHealth.errorRate * 100).toFixed(1) + '%', color: systemHealth.errorRate > 0.05 ? '#ffffff' : '#c0c0c0' },
           ].map((metric) => (
             <div key={metric.label} style={{
               padding: '10px 12px',
-              borderRadius: '8px',
+              borderRadius: '0px',
               background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(255, 255, 255, 0.04)',
+              border: '2px solid #333333',
               textAlign: 'center',
             }}>
               <p style={{
@@ -309,10 +309,10 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
         {/* Status summary row */}
         <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
           {[
-            { label: 'Active', count: activeCount, color: '#34d399' },
+            { label: 'Active', count: activeCount, color: '#c0c0c0' },
             { label: 'Idle', count: idleCount, color: 'rgba(255, 255, 255, 0.3)' },
             { label: 'Standby', count: brains.filter((b) => b.status === 'standby').length, color: '#eab308' },
-            { label: 'Error', count: errorCount, color: '#f87171' },
+            { label: 'Error', count: errorCount, color: '#ffffff' },
           ].map((s) => (
             <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <div style={{
@@ -345,9 +345,9 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
           Array.from({ length: 7 }).map((_, i) => (
             <div key={i} style={{
               padding: '16px',
-              borderRadius: '12px',
+              borderRadius: '0px',
               background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(255, 255, 255, 0.04)',
+              border: '2px solid #333333',
               height: '120px',
             }}>
               <motion.div
@@ -356,8 +356,8 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
                 style={{
                   width: '100%',
                   height: '100%',
-                  borderRadius: '8px',
-                  background: 'rgba(255, 255, 255, 0.03)',
+                  borderRadius: '0px',
+                  background: '#0a0a0a',
                 }}
               />
             </div>
@@ -374,11 +374,11 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
                 onClick={() => setSelectedBrain(selectedBrain === brain.id ? null : brain.id)}
                 style={{
                   padding: '16px',
-                  borderRadius: '12px',
+                  borderRadius: '0px',
                   background: selectedBrain === brain.id
                     ? 'linear-gradient(135deg, ' + brain.color + '15, ' + brain.color + '05)'
                     : 'rgba(255, 255, 255, 0.02)',
-                  border: '1px solid ' + (selectedBrain === brain.id ? brain.color + '40' : 'rgba(255, 255, 255, 0.04)'),
+                  border: '1px solid ' + (selectedBrain === brain.id ? brain.color + '40' : '#0a0a0a'),
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   position: 'relative',
@@ -411,7 +411,7 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
                 <div style={{
                   width: '36px',
                   height: '36px',
-                  borderRadius: '10px',
+                  borderRadius: '0px',
                   background: 'linear-gradient(135deg, ' + brain.color + '20, ' + brain.color + '08)',
                   border: '1px solid ' + brain.color + '30',
                   display: 'flex',
@@ -451,8 +451,8 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
                       fontSize: '9px',
                       fontFamily: "'JetBrains Mono', monospace",
                       padding: '2px 5px',
-                      borderRadius: '3px',
-                      background: 'rgba(255, 255, 255, 0.04)',
+                      borderRadius: '0px',
+                      background: '#0a0a0a',
                       color: 'rgba(255, 255, 255, 0.3)',
                     }}>
                       {brain.stats.requestCount} req
@@ -461,8 +461,8 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
                       fontSize: '9px',
                       fontFamily: "'JetBrains Mono', monospace",
                       padding: '2px 5px',
-                      borderRadius: '3px',
-                      background: 'rgba(255, 255, 255, 0.04)',
+                      borderRadius: '0px',
+                      background: '#0a0a0a',
                       color: 'rgba(255, 255, 255, 0.3)',
                     }}>
                       {brain.stats.avgResponseTime}ms
@@ -479,7 +479,7 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
                     fontSize: '10px',
                     fontFamily: "'JetBrains Mono', monospace",
                     padding: '2px 8px',
-                    borderRadius: '4px',
+                    borderRadius: '0px',
                     background: sc.bg,
                     color: sc.text,
                     textTransform: 'uppercase',
@@ -535,7 +535,7 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
                   onClick={() => onSelectBrain?.(selectedBrainData.id)}
                   style={{
                     padding: '8px 16px',
-                    borderRadius: '8px',
+                    borderRadius: '0px',
                     background: `linear-gradient(135deg, ${selectedBrainData.color}30, ${selectedBrainData.color}15)`,
                     border: `1px solid ${selectedBrainData.color}50`,
                     color: selectedBrainData.color,
@@ -568,13 +568,13 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
                   {[
                     { label: 'REQUESTS', value: selectedBrainData.stats.requestCount.toString(), color: selectedBrainData.color },
                     { label: 'AVG LATENCY', value: selectedBrainData.stats.avgResponseTime + 'ms', color: '#a855f7' },
-                    { label: 'SUCCESS', value: Math.round(selectedBrainData.stats.successRate * 100) + '%', color: selectedBrainData.stats.successRate > 0.9 ? '#34d399' : '#eab308' },
+                    { label: 'SUCCESS', value: Math.round(selectedBrainData.stats.successRate * 100) + '%', color: selectedBrainData.stats.successRate > 0.9 ? '#c0c0c0' : '#eab308' },
                   ].map((s) => (
                     <div key={s.label} style={{
                       padding: '10px',
-                      borderRadius: '8px',
+                      borderRadius: '0px',
                       background: 'rgba(0, 0, 0, 0.3)',
-                      border: '1px solid rgba(255, 255, 255, 0.04)',
+                      border: '2px solid #333333',
                       textAlign: 'center',
                     }}>
                       <p style={{
@@ -613,9 +613,9 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
                   {selectedBrainData.recentConversations.map((conv) => (
                     <div key={conv.id} style={{
                       padding: '10px 12px',
-                      borderRadius: '8px',
+                      borderRadius: '0px',
                       background: 'rgba(0, 0, 0, 0.3)',
-                      border: '1px solid rgba(255, 255, 255, 0.04)',
+                      border: '2px solid #333333',
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
@@ -657,9 +657,9 @@ export default function AgentStatusMonitor({ onSelectBrain }: AgentStatusMonitor
           margin: '0 20px 16px',
           padding: '10px 14px',
           background: 'rgba(248, 113, 113, 0.08)',
-          border: '1px solid rgba(248, 113, 113, 0.2)',
-          borderRadius: '8px',
-          color: '#f87171',
+          border: '2px solid #333333',
+          borderRadius: '0px',
+          color: '#ffffff',
           fontSize: '12px',
         }}>
           {error}

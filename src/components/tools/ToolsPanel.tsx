@@ -111,9 +111,9 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
   const inputStyle: React.CSSProperties = {
     width: '100%',
     padding: '10px 14px',
-    background: 'rgba(0, 0, 0, 0.4)',
-    border: '1px solid rgba(255, 255, 255, 0.06)',
-    borderRadius: '8px',
+    background: '#000000',
+    border: '2px solid #333333',
+    borderRadius: '0px',
     color: 'rgba(255, 255, 255, 0.9)',
     fontSize: '14px',
     fontFamily: "'JetBrains Mono', monospace",
@@ -122,9 +122,9 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
 
   const buttonStyle: React.CSSProperties = {
     padding: '8px 16px',
-    background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05))',
-    border: '1px solid rgba(56, 189, 248, 0.3)',
-    borderRadius: '8px',
+    background: '#000000',
+    border: '2px solid #333333',
+    borderRadius: '0px',
     color: '#38bdf8',
     fontSize: '13px',
     fontFamily: "'JetBrains Mono', monospace",
@@ -147,8 +147,8 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
             bottom: 0,
             width: '420px',
             background: 'rgba(13, 17, 23, 0.95)',
-            backdropFilter: 'blur(20px)',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.06)',
+
+            borderLeft: '2px solid #333333',
             zIndex: 9999,
             display: 'flex',
             flexDirection: 'column',
@@ -161,15 +161,15 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
             alignItems: 'center',
             justifyContent: 'space-between',
             padding: '16px 20px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+            borderBottom: '2px solid #333333',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <div style={{
                 width: '32px',
                 height: '32px',
-                borderRadius: '8px',
-                background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05))',
-                border: '1px solid rgba(56, 189, 248, 0.3)',
+                borderRadius: '0px',
+                background: '#000000',
+                border: '2px solid #333333',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -191,9 +191,9 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
                 Clear
               </button>
               <button onClick={onToggle} style={{
-                width: '32px', height: '32px', borderRadius: '8px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
+                width: '32px', height: '32px', borderRadius: '0px',
+                background: '#0a0a0a',
+                border: '2px solid #333333',
                 color: 'rgba(255, 255, 255, 0.5)',
                 cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '18px',
@@ -208,7 +208,7 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
             display: 'flex',
             padding: '8px 12px',
             gap: '4px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+            borderBottom: '2px solid #333333',
             overflowX: 'auto',
           }}>
             {toolTabs.map((tab) => (
@@ -217,7 +217,7 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
                 onClick={() => { setActiveTab(tab.id); setError(null) }}
                 style={{
                   padding: '8px 12px',
-                  borderRadius: '8px',
+                  borderRadius: '0px',
                   border: 'none',
                   background: activeTab === tab.id
                     ? 'rgba(56, 189, 248, 0.15)'
@@ -258,9 +258,9 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
                 {calcResult && (
                   <div style={{
                     padding: '14px',
-                    background: 'rgba(0, 0, 0, 0.4)',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(56, 189, 248, 0.1)',
+                    background: '#000000',
+                    borderRadius: '0px',
+                    border: '2px solid #333333',
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                       <span style={{ fontSize: '11px', color: 'rgba(56, 189, 248, 0.6)', fontFamily: "'JetBrains Mono', monospace" }}>
@@ -297,9 +297,9 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
                   <div style={{
                     flex: 1,
                     padding: '14px',
-                    background: 'rgba(0, 0, 0, 0.4)',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    background: '#000000',
+                    borderRadius: '0px',
+                    border: '2px solid #333333',
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                       <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.4)', fontFamily: "'JetBrains Mono', monospace" }}>
@@ -312,7 +312,7 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
                     <pre style={{
                       margin: 0,
                       fontSize: '13px',
-                      color: '#34d399',
+                      color: '#c0c0c0',
                       fontFamily: "'JetBrains Mono', monospace",
                       whiteSpace: 'pre-wrap',
                       wordBreak: 'break-all',
@@ -360,9 +360,9 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
                         transition={{ delay: i * 0.05 }}
                         style={{
                           padding: '12px',
-                          background: 'rgba(0, 0, 0, 0.4)',
-                          borderRadius: '8px',
-                          border: '1px solid rgba(255, 255, 255, 0.06)',
+                          background: '#000000',
+                          borderRadius: '0px',
+                          border: '2px solid #333333',
                         }}
                       >
                         <a href={result.url || '#'} target="_blank" rel="noreferrer" style={{
@@ -402,9 +402,9 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
                   <div style={{
                     flex: 1,
                     padding: '14px',
-                    background: 'rgba(0, 0, 0, 0.4)',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    background: '#000000',
+                    borderRadius: '0px',
+                    border: '2px solid #333333',
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                       <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.4)', fontFamily: "'JetBrains Mono', monospace" }}>
@@ -441,9 +441,9 @@ export default function ToolsPanel({ isVisible, onToggle }: ToolsPanelProps) {
                   style={{
                     padding: '12px',
                     background: 'rgba(248, 113, 113, 0.08)',
-                    border: '1px solid rgba(248, 113, 113, 0.2)',
-                    borderRadius: '8px',
-                    color: '#f87171',
+                    border: '2px solid #333333',
+                    borderRadius: '0px',
+                    color: '#ffffff',
                     fontSize: '13px',
                   }}
                 >

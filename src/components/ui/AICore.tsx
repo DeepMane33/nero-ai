@@ -11,10 +11,10 @@ interface AICoreProps {
 }
 
 const stateConfig = {
-  idle: { color: '#94a3b8', pulseDuration: 3, label: 'Ready' },
-  listening: { color: '#94a3b8', pulseDuration: 1.2, label: 'Listening' },
-  thinking: { color: '#7ec8e3', pulseDuration: 1.5, label: 'Thinking' },
-  speaking: { color: '#7eddd6', pulseDuration: 0.8, label: 'Speaking' },
+  idle: { color: '#808080', pulseDuration: 3, label: 'Ready' },
+  listening: { color: '#808080', pulseDuration: 1.2, label: 'Listening' },
+  thinking: { color: '#808080', pulseDuration: 1.5, label: 'Thinking' },
+  speaking: { color: '#c0c0c0', pulseDuration: 0.8, label: 'Speaking' },
   researching: { color: '#b4a0d4', pulseDuration: 1.8, label: 'Researching' },
   generating: { color: '#c8b86a', pulseDuration: 1.0, label: 'Generating' },
 }
@@ -32,8 +32,8 @@ export default function AICore({ state = 'idle', size = 160, mood = null }: AICo
   const ring2Radius = size * 0.32
 
   // Cool silver gradient colors
-  const glowColor1 = '#94a3b8'
-  const glowColor2 = '#7ec8e3'
+  const glowColor1 = '#808080'
+  const glowColor2 = '#808080'
   const glowColor3 = '#b4a0d4'
 
   return (
@@ -85,10 +85,10 @@ export default function AICore({ state = 'idle', size = 160, mood = null }: AICo
         style={{
           width: size * 0.75,
           height: size * 0.75,
-          border: '1px solid rgba(148, 163, 184, 0.06)',
+          border: '2px solid #333333',
           background: 'radial-gradient(circle, rgba(148, 163, 184, 0.02), transparent 60%)',
-          backdropFilter: 'blur(4px)',
-          WebkitBackdropFilter: 'blur(4px)',
+
+
         }}
         animate={{
           scale: [1, 1.02, 1],

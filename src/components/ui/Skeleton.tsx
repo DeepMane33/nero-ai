@@ -25,7 +25,7 @@ export function Skeleton({ count = 1, height = 42, className = '' }: SkeletonPro
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)',
+              background: '#000000',
               animation: 'shimmer 1.5s infinite',
             }}
           />
@@ -54,7 +54,7 @@ export function ChatSkeleton({ count = 4 }: { count?: number }) {
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)',
+                background: '#000000',
                 animation: 'shimmer 1.5s infinite',
               }}
             />
@@ -87,7 +87,7 @@ export function CardSkeleton({ count = 4 }: { count?: number }) {
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)',
+              background: '#000000',
               animation: 'shimmer 1.5s infinite',
             }}
           />

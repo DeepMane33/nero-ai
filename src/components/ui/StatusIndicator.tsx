@@ -9,9 +9,9 @@ interface StatusIndicatorProps {
 }
 
 const statusConfig = {
-  online: { color: '#7eddd6', label: 'Online' },
-  processing: { color: '#94a3b8', label: 'Processing' },
-  error: { color: '#d4736e', label: 'Error' },
+  online: { color: '#c0c0c0', label: 'Online' },
+  processing: { color: '#808080', label: 'Processing' },
+  error: { color: '#ffffff', label: 'Error' },
   offline: { color: '#555a63', label: 'Offline' },
 }
 

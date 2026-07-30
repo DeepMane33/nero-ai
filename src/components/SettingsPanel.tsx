@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 
-const ACCENT_COLORS = ['#c0c0c0', '#94a3b8', '#7b8da4', '#b4a0d4', '#7ec8e3', '#8fb996'];
+const ACCENT_COLORS = ['#c0c0c0', '#808080', '#7b8da4', '#b4a0d4', '#808080', '#8fb996'];
 
 const SECTIONS = [
   { id: 'model', label: 'Model', icon: '◆' },
@@ -93,7 +93,7 @@ export default function SettingsPanel() {
                   className="w-full flex items-center justify-between p-4 rounded-lg"
                   style={{
                     background: 'rgba(176,184,196,0.06)',
-                    border: '1px solid rgba(176,184,196,0.2)',
+                    border: '2px solid #333333',
                   }}
                 >
                   <div className="flex-1">
@@ -101,7 +101,7 @@ export default function SettingsPanel() {
                       <div className="text-sm font-bold" style={{ color: 'rgba(255,255,255,0.85)' }}>
                         Google Gemini
                       </div>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(16,185,129,0.15)', color: '#10b981', border: '1px solid rgba(16,185,129,0.2)' }}>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(16,185,129,0.15)', color: '#10b981', border: '2px solid #333333' }}>
                         ACTIVE
                       </span>
                     </div>

@@ -218,9 +218,9 @@ export default function ResearchMode() {
       <div
         className="shrink-0 px-6 py-4 relative z-10"
         style={{
-          borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
-          background: 'rgba(10, 11, 15, 0.8)',
-          backdropFilter: 'blur(12px)',
+          borderBottom: '2px solid #333333',
+          background: '#050505',
+
         }}
       >
         <div className="flex items-center justify-between mb-4">
@@ -301,8 +301,8 @@ export default function ResearchMode() {
               className="absolute right-0 top-0 bottom-0 w-80 z-20 overflow-y-auto"
               style={{
                 background: 'rgba(10, 11, 15, 0.95)',
-                borderLeft: '1px solid rgba(255, 255, 255, 0.06)',
-                backdropFilter: 'blur(16px)',
+                borderLeft: '2px solid #333333',
+
               }}
               initial={{ x: '100%', opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -338,7 +338,7 @@ export default function ResearchMode() {
                         className="w-full text-left px-3 py-2 rounded-lg cursor-pointer"
                         style={{
                           background: 'rgba(255, 255, 255, 0.02)',
-                          border: '1px solid rgba(255, 255, 255, 0.04)',
+                          border: '2px solid #333333',
                         }}
                         onClick={() => loadFromHistory(entry)}
                         whileHover={{ background: 'var(--accent-subtle)' }}
@@ -375,7 +375,7 @@ export default function ResearchMode() {
                 className="w-16 h-16 rounded-full flex items-center justify-center"
                 style={{
                   background: 'rgba(248, 113, 113, 0.08)',
-                  border: '1px solid rgba(248, 113, 113, 0.2)',
+                  border: '2px solid #333333',
                 }}
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" strokeWidth="2">
@@ -384,7 +384,7 @@ export default function ResearchMode() {
                   <line x1="9" y1="9" x2="15" y2="15" />
                 </svg>
               </div>
-              <p className="text-sm" style={{ color: '#f87171' }}>{error}</p>
+              <p className="text-sm" style={{ color: '#ffffff' }}>{error}</p>
               <GlowButton variant="secondary" size="sm" onClick={() => setError(null)}>
                 Dismiss
               </GlowButton>
@@ -516,8 +516,8 @@ export default function ResearchMode() {
                       key={suggestion}
                       className="px-3 py-1.5 rounded-lg text-xs cursor-pointer"
                       style={{
-                        background: 'rgba(255, 255, 255, 0.03)',
-                        border: '1px solid rgba(255, 255, 255, 0.06)',
+                        background: '#0a0a0a',
+                        border: '2px solid #333333',
                         color: 'var(--text-tertiary)',
                       }}
                       onClick={() => {

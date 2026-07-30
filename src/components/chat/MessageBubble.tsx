@@ -90,7 +90,7 @@ function parseTable(lines: string[]): ReactNode {
                 key={i}
                 className="px-3 py-2 text-left font-semibold"
                 style={{
-                  background: 'rgba(148, 163, 184, 0.04)',
+                  background: '#0a0a0a',
                   borderBottom: '1px solid var(--border-default)',
                   color: 'var(--text-primary)',
                 }}
@@ -384,7 +384,7 @@ export default function MessageBubble({
             ? 'rgba(245, 158, 11, 0.06)'
             : 'var(--bg-secondary)',
           border: isUser
-            ? '1px solid rgba(245, 158, 11, 0.1)'
+            ? '2px solid #333333'
             : '1px solid var(--border-default)',
         }}
       >
@@ -535,7 +535,7 @@ export default function MessageBubble({
                 className="px-3 py-1.5 rounded-lg text-[11px] font-medium"
                 style={{
                   background: 'rgba(245, 158, 11, 0.1)',
-                  border: '1px solid rgba(245, 158, 11, 0.2)',
+                  border: '2px solid #333333',
                   color: '#f59e0b',
                   cursor: 'pointer',
                 }}
